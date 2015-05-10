@@ -17,7 +17,12 @@ class Node
 {
 private:
     std::string name;
+    std::string type;
     float weightDelay;
+public:
+    Node(std::string);
+    void setWeightDelay(float);
+    float getWeightDelay();
 };
 
 #endif /* defined(__VParser__Node__) */

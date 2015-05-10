@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		77E7FEF61AFDDB5D00D716B2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEF51AFDDB5D00D716B2 /* main.cpp */; };
 		77E7FEFE1AFDDBA000D716B2 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEFC1AFDDBA000D716B2 /* Node.cpp */; };
+		77E7FF011AFDDD9A00D716B2 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEFF1AFDDD9A00D716B2 /* Edge.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		77E7FEF51AFDDB5D00D716B2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		77E7FEFC1AFDDBA000D716B2 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
 		77E7FEFD1AFDDBA000D716B2 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		77E7FEFF1AFDDD9A00D716B2 /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Edge.cpp; sourceTree = "<group>"; };
+		77E7FF001AFDDD9A00D716B2 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,8 @@
 				77E7FEF51AFDDB5D00D716B2 /* main.cpp */,
 				77E7FEFC1AFDDBA000D716B2 /* Node.cpp */,
 				77E7FEFD1AFDDBA000D716B2 /* Node.h */,
+				77E7FEFF1AFDDD9A00D716B2 /* Edge.cpp */,
+				77E7FF001AFDDD9A00D716B2 /* Edge.h */,
 			);
 			path = VParser;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77E7FF011AFDDD9A00D716B2 /* Edge.cpp in Sources */,
 				77E7FEF61AFDDB5D00D716B2 /* main.cpp in Sources */,
 				77E7FEFE1AFDDBA000D716B2 /* Node.cpp in Sources */,
 			);

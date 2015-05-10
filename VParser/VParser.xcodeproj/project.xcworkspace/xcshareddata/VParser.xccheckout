@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>7F9386ED-7A13-4C9F-887B-B76C0583B308</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>VParser</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>B42EC1F06D0EA102DFF22EFA5A525E517DD53248</key>
 		<string>https://github.com/ayass3r/StaticTimingAnalysisQuest.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>VParser/VParser.xcodeproj/project.xcworkspace</string>
+	<string>VParser/VParser.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>B42EC1F06D0EA102DFF22EFA5A525E517DD53248</key>
