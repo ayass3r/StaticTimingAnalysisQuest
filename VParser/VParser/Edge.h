@@ -27,8 +27,10 @@ public:
     
     void setDestination(Node*);
     Node getDestination();
+    
     void setSource(Node*);
     Node getSource();
+    
     void setWeightDelay(float);
     float getWeightDelay();
     

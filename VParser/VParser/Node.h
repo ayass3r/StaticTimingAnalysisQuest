@@ -16,13 +16,20 @@
 class Node
 {
 private:
-    std::string name;
-    std::string type;
-    float weightDelay;
+    std::string nodeName; //name of the node
+    //gate &refGate -> this is a refrence to a gate in the liberty file
+    //inPort &refinPort -> this is a refrence to an input port
+    //outPort &refoutPort -> this is a refrence to an output port
+    float loadCapacitance; // total load capacitance on the output  pin
+    float outSlewRate; //slew rate of the output pin
+    float delay; //delay of the gate
 public:
     Node(std::string);
-    void setWeightDelay(float);
-    float getWeightDelay();
+    
+    std::string getName(); //get name of the gate
+    
+    float calDelay(float inSlewRate); //calcu
+    float calOutSlewRate();
 };
 
 #endif /* defined(__VParser__Node__) */
