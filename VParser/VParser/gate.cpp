@@ -7,3 +7,13 @@
 //
 
 #include "gate.h"
+
+gate::gate(std::string name, std::string type)
+{
+    gateName = name;
+    gateType = type;
+    isFlip = false;
+    in1 = NULL;
+    in2 = NULL;
+    out1 = NULL;
+}

@@ -16,6 +16,8 @@
 class gate
 {
 public:
+    gate(std::string, std::string);
+    
     std::string gateName;
     std::string gateType;
     bool isFlip;

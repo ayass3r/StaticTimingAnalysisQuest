@@ -17,7 +17,7 @@
 class Edge
 {
 private:
-    std::string name;
+    std::string edgeName;
     Node* destination;
     Node* source;
     float weightDelay;
@@ -26,10 +26,10 @@ public:
     ~Edge();
     
     void setDestination(Node*);
-    Node getDestination();
+    Node* getDestination();
     
     void setSource(Node*);
-    Node getSource();
+    Node* getSource();
     
     void setWeightDelay(float);
     float getWeightDelay();

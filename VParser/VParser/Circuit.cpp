@@ -53,7 +53,7 @@ void Circuit::parseLine(std::string line)
     }
     else if (std::regex_match(line, results, rGate))
     {
-        gates.push_back(new gate);
+        gates.push_back(new gate(results[2], results[1]));
         gates[gates.size()-1]->gateType = results[1];
         gates[gates.size()-1]->gateName = results[2];
         gateMap.insert(std::pair<std::string, int> (results[2], gates.size()-1));
