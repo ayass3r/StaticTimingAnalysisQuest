@@ -23,14 +23,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VParser/Circuit.h"
-            timestampString = "452964113.508672"
+            filePath = "VParser/Circuit.cpp"
+            timestampString = "453045762.31238"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "class Circuit"
-            landmarkType = "3">
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "Circuit::parseLine(std::string line)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		7799210C1AFFADB900B0F100 /* Circuit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7799210A1AFFADB900B0F100 /* Circuit.cpp */; };
 		7799210F1AFFC12300B0F100 /* wire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7799210D1AFFC12300B0F100 /* wire.cpp */; };
-		779921121AFFC39100B0F100 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779921101AFFC39100B0F100 /* input.cpp */; };
-		779921151AFFC39B00B0F100 /* output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779921131AFFC39B00B0F100 /* output.cpp */; };
+		779921181B00CD7300B0F100 /* gate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779921161B00CD7300B0F100 /* gate.cpp */; };
 		77E7FEF61AFDDB5D00D716B2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEF51AFDDB5D00D716B2 /* main.cpp */; };
 		77E7FEFE1AFDDBA000D716B2 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEFC1AFDDBA000D716B2 /* Node.cpp */; };
 		77E7FF011AFDDD9A00D716B2 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEFF1AFDDD9A00D716B2 /* Edge.cpp */; };
@@ -33,10 +32,8 @@
 		7799210B1AFFADB900B0F100 /* Circuit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Circuit.h; sourceTree = "<group>"; };
 		7799210D1AFFC12300B0F100 /* wire.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wire.cpp; sourceTree = "<group>"; };
 		7799210E1AFFC12300B0F100 /* wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wire.h; sourceTree = "<group>"; };
-		779921101AFFC39100B0F100 /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input.cpp; sourceTree = "<group>"; };
-		779921111AFFC39100B0F100 /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
-		779921131AFFC39B00B0F100 /* output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output.cpp; sourceTree = "<group>"; };
-		779921141AFFC39B00B0F100 /* output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output.h; sourceTree = "<group>"; };
+		779921161B00CD7300B0F100 /* gate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gate.cpp; sourceTree = "<group>"; };
+		779921171B00CD7300B0F100 /* gate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gate.h; sourceTree = "<group>"; };
 		77E7FEF21AFDDB5D00D716B2 /* VParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E7FEF51AFDDB5D00D716B2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		77E7FEFC1AFDDBA000D716B2 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
@@ -84,10 +81,8 @@
 				7799210B1AFFADB900B0F100 /* Circuit.h */,
 				7799210D1AFFC12300B0F100 /* wire.cpp */,
 				7799210E1AFFC12300B0F100 /* wire.h */,
-				779921101AFFC39100B0F100 /* input.cpp */,
-				779921111AFFC39100B0F100 /* input.h */,
-				779921131AFFC39B00B0F100 /* output.cpp */,
-				779921141AFFC39B00B0F100 /* output.h */,
+				779921161B00CD7300B0F100 /* gate.cpp */,
+				779921171B00CD7300B0F100 /* gate.h */,
 			);
 			path = VParser;
 			sourceTree = "<group>";
@@ -150,9 +145,8 @@
 			files = (
 				77E7FF011AFDDD9A00D716B2 /* Edge.cpp in Sources */,
 				77E7FEF61AFDDB5D00D716B2 /* main.cpp in Sources */,
-				779921121AFFC39100B0F100 /* input.cpp in Sources */,
+				779921181B00CD7300B0F100 /* gate.cpp in Sources */,
 				77E7FEFE1AFDDBA000D716B2 /* Node.cpp in Sources */,
-				779921151AFFC39B00B0F100 /* output.cpp in Sources */,
 				7799210F1AFFC12300B0F100 /* wire.cpp in Sources */,
 				7799210C1AFFADB900B0F100 /* Circuit.cpp in Sources */,
 			);

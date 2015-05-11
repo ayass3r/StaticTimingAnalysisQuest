@@ -9,21 +9,28 @@
 #ifndef __VParser__Circuit__
 #define __VParser__Circuit__
 
-#include <stdio.h>
+
 #include "Edge.h"
 #include "Node.h"
+#include "wire.h"
+#include "gate.h"
+#include <stdio.h>
 #include <string>
 #include <iostream>
 #include <vector>
+#include <map>
 
 class Circuit
-{
+{  
 private:
-    std::vector<Node> inNodes;
-    std::vector<Node> outNodes;
-    std::vector<Node> midNodes;
-    std::vector<Edge> edges;
+    wire* w;
+    std::map<std::string, wire*> wireMap;
+    std::map<std::string, int> gateMap;
+    std::vector<gate*> gates;
 public:
+    Circuit();
+    void parseLine(std::string);
+    void openFile(std::string);
     
 };
 
