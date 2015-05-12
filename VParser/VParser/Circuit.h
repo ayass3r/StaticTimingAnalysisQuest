@@ -10,8 +10,7 @@
 #define __VParser__Circuit__
 
 
-#include "Node.h"
-#include "Edge.h"
+//#include "Edge.h"
 #include "wire.h"
 #include "gate.h"
 #include <stdio.h>
@@ -19,14 +18,19 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <regex>
+#include <fstream>
 
 class Circuit
 {  
 private:
     wire* w;
+    gate* g;
+    //Edge* e;
     std::map<std::string, wire*> wireMap;
-    std::map<std::string, int> gateMap;
-    std::vector<gate*> gates;
+    std::map<std::string, gate*> gateMap;
+    //std::vector<gate*> gates;
+    std::string pGate;
 public:
     Circuit();
     void parseLine(std::string);

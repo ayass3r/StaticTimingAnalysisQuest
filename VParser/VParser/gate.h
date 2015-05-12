@@ -11,15 +11,15 @@
 
 #include <stdio.h>
 #include <string>
-#include "wire.h"
+//#include "wire.h"
 
 class gate
 {
 public:
     gate(std::string, std::string);
     
-    void setIn1(wire*);
-    wire* getIn1();
+    void setIn1(std::string);
+    std::string getIn1();
     
     std::string getName();
     std::string getType();
@@ -27,17 +27,17 @@ public:
     void setIsFlip(bool);
     bool getIsFlip();
     
-    void setIn2(wire*);
-    wire* getIn2();
+    void setIn2(std::string);
+    std::string getIn2();
     
-    void setOut(wire*);
-    wire* getOut();
+    void setOut(std::string);
+    std::string getOut();
     
 private:
     bool isFlip;
-    wire* in1;
-    wire* in2;
-    wire* out1;
+    std::string in1;
+    std::string in2;
+    std::string out1;
     std::string gateName;
     std::string gateType;
     float loadCapacitance; // total load capacitance on the output  pin

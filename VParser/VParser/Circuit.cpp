@@ -7,13 +7,12 @@
 //
 
 #include "Circuit.h"
-#include <regex>
-#include <fstream>
-#include <iostream>
+
 
 Circuit::Circuit()
 {
     w = NULL;
+    pGate = "";
 }
 void Circuit::parseLine(std::string line)
 {
@@ -44,25 +43,29 @@ void Circuit::parseLine(std::string line)
     }
     else if (std::regex_match(line, results, rGate))
     {
-        
+        pGate = results.str(2);
         std::cout << "Gate Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
-        gates.push_back(new gate(results.str(2), results.str(1)));
-        gateMap.insert(std::pair<std::string, int> (results.str(2), gates.size()-1));
-        gates[gates.size()-1]->setIsFlip((results[1] == "DFFPOSX1") ? true : false);
+        g = new gate(results.str(2), results.str(1));
+        //gates.push_back(new gate(results.str(2), results.str(1)));
+        gateMap.insert(std::pair<std::string, gate*> (results.str(2), g));
+        gateMap[results.str(2)]->setIsFlip((results[1] == "DFFPOSX1") ? true : false);
     }
     else if (std::regex_match(line, results, in1)){
         std::cout<<"Input: "<< results.str(2) << " found" << std::endl;
-        gates[gates.size()-1]->setIn1(wireMap[results.str(2)]);
+        gateMap[pGate]->setIn1(results.str(2));
+        wireMap[results.str(2)]->setWSource(gateMap[pGate]);
     }
     
     else if (std::regex_match(line, results, in2)){
         std::cout<<"Input: "<< results.str(2) << " found" << std::endl;
-        gates[gates.size()-1]->setIn2(wireMap[results.str(2)]);
+        gateMap[pGate]->setIn2(results.str(2));
+        wireMap[results.str(2)]->setWSource(gateMap[pGate]);
     }
     
     else if (std::regex_match(line, results, rOut)){
         std::cout<<"Output: "<< results.str(2) << " found" << std::endl;
-        gates[gates.size()-1]->setOut(wireMap[results.str(2)]);
+        gateMap[pGate]->setOut(results.str(2));
+        wireMap[results.str(2)]->setWDestination(gateMap[pGate]);
     }
     
     else if (std::regex_match(line, results, assign1))
@@ -90,23 +93,23 @@ void Circuit::openFile(std::string filePath)
             //try
             //{
                 parseLine(line);
-//            }
-//            catch(std::exception& e){
-//                throw std::invalid_argument("file formate invalid");
-//            }
+            //}
+            //catch(std::exception& e){
+                //throw std::invalid_argument("file formate invalid");
+            //}
         }
     }
 }
 void Circuit::printGates()
 {
-    for(int i = 0; i < gates.size(); i++)
+    for(std::map<std::string, gate*>::iterator i = gateMap.begin(); i != gateMap.end(); i++)
     {
-        std::cout << gates[i]->getType() << ' ' << gates[i]->getName() << std::endl;
-        std::cout << '\t' << "iPort1: " << gates[i]->getIn1()->getName() << " type: " << gates[i]->getIn1()->getWireType() << std::endl;
-        if(gates[i]->getIn2() != NULL)
-            std::cout << '\t' << "iPort2: " << gates[i]->getIn2()->getName() << " type: " << gates[i]->getIn2()->getWireType() << std::endl;
+        std::cout << i->second->getType() << ' ' << i->second->getName() << std::endl;
+        std::cout << '\t' << "iPort1: " << i->second->getIn1() /*<< " type: " << gates[i]->getIn1()->getWireType() */ << std::endl;
+        if(i->second->getIn2() != "")
+            std::cout << '\t' << "iPort2: " << i->second->getIn2() /* << " type: " << gates[i]->getIn2()->getWireType() */ << std::endl;
         
-        std::cout << '\t' << "oPort3: " << gates[i]->getOut()->getName() << " type: " << gates[i]->getOut()->getWireType() << std::endl;
+        std::cout << '\t' << "oPort3: " << i->second->getOut() /* << " type: " << gates[i]->getOut()->getWireType() */ << std::endl;
     }
     std::cout << "---------------Done Printing Gates----------------\n";
 }

@@ -14,6 +14,7 @@ wire::wire(std::string name, std::string type)
     wireName = name;
     wireType = type;
     assignWire = NULL;
+    wSource = NULL;
     netCapacitance = 0.0;
     inSlewRate = 0.0;
 }
@@ -40,4 +41,12 @@ void wire::setNetCap(float value)
 float wire::getNetCap()
 {
     return netCapacitance;
+}
+void wire::setWSource(gate* g)
+{
+    wSource = g;
+}
+void wire::setWDestination(gate* g)
+{
+    wDestinations.push_back(g);
 }

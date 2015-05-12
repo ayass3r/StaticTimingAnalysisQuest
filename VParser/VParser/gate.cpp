@@ -13,35 +13,35 @@ gate::gate(std::string name, std::string type)
     gateName = name;
     gateType = type;
     isFlip = false;
-    in1 = NULL;
-    in2 = NULL;
-    out1 = NULL;
+    in1 = "";
+    in2 = "";
+    out1 = "";
 }
 void gate::setIsFlip(bool dflag)
 {
     isFlip = dflag;
 }
-void gate::setIn1(wire *w1)
+void gate::setIn1(std::string w1)
 {
     in1 = w1;
 }
-wire* gate::getIn1()
+std::string gate::getIn1()
 {
     return in1;
 }
-void gate::setIn2(wire *w1)
+void gate::setIn2(std::string w1)
 {
     in2 = w1;
 }
-wire* gate::getIn2()
+std::string gate::getIn2()
 {
     return in2;
 }
-void gate::setOut(wire *w1)
+void gate::setOut(std::string w1)
 {
     out1 = w1;
 }
-wire* gate::getOut()
+std::string gate::getOut()
 {
     return out1;
 }

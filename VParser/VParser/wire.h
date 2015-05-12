@@ -12,12 +12,17 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
+#include "gate.h"
 
 class wire
 {
 private:
     std::string wireName;
     std::string wireType;
+    
+    gate* wSource;
+    std::vector<gate*> wDestinations;
+    
     float netCapacitance;
     float inSlewRate;
     wire* assignWire;
@@ -34,9 +39,9 @@ public:
     void setNetCap(float);
     float getNetCap();
     
-    //void setNSource(Node*);
+    void setWSource(gate*);
     
-    //void setNDestination(Node*);
+    void setWDestination(gate*);
 };
 
 #endif /* defined(__VParser__wire__) */

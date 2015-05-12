@@ -12,13 +12,16 @@
 #include <stdio.h>
 #include <vector>
 #include "wire.h"
-#include "Node.h"
+#include "gate.h"
+//#include "Node.h"
 
 class Edge
 {
-private:
-    wire* wSource;
-    Node* eSource;
-    std::vector<Node*> eDestinations;
+//private:
+//    wire* wSource;
+//    gate* eSource;
+//    std::vector<gate*> eDestinations;
+//public:
+//    Edge(wire*, gate*, gate*);
 };
 #endif /* defined(__VParser__Edge__) */
