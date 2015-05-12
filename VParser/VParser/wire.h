@@ -16,15 +16,16 @@ class wire
 {
 private:
     std::string wireName;
+    std::string wireType;
     float netCapacitance;
     float inSlewRate;
-    int wireType;
     wire* assignWire;
+    
 public:
-    wire(std::string, int);
+    wire(std::string, std::string);
     
     std::string getName();
-    int getWireType();
+    std::string getWireType();
     
     void setAssign(wire*);
     wire* getAssign();

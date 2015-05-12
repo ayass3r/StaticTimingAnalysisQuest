@@ -13,65 +13,64 @@
 
 Circuit::Circuit()
 {
-    
+    w = NULL;
 }
-
 void Circuit::parseLine(std::string line)
 {
-    std::regex sWire(R"(\s*(wire|input|output) +(\w+)\s*)");
-    std::regex mWire(R"(\s*(wire|input|output)\s+\[(\d+)\:(\d+)\]\s*(\w+)\s*)");
-    std::regex rGate(R"(\s*(\w+)\s+(\w+)\s*)");
-    std::regex in1(R"(\s*.[A|CLK]\((\w+))");
-    std::regex in2(R"(\s*.[B|D]\((\w+))");
-    std::regex rOut(R"(\s*.[Y|G]\((\w+))");
-    std::regex assign1(R"(\s*assign\s+(\w+|\w+\[\d+\])\s+\=\s+(\w+\[\d+\]|\w+)\s*)");
+    std::regex sWire("\\s*(wire|input|output) +(\\w+)\\s*;\\s*");
+    std::regex mWire("\\s*(wire|input|output)\\s+\\[(\\d+)\\:(\\d+)\\]\\s*(\\w+)\\s*;\\s*");
+    std::regex rGate("\\s*(\\w+)\\s+(\\w+)\\s*\\(\\s*");
+    std::regex in1("\\s*.(CLK|A)\\((\\w+\\[\\d+\\]|\\w+)\\)\\s*,\\s*");
+    std::regex in2("\\s*.(B|D)\\((\\w+\\[\\d+\\]|\\w+)\\)\\s*,\\s*");
+    std::regex rOut("\\s*.(Y|Q)\\((\\w+\\[\\d+\\]|\\w+)\\)\\s*");
+    std::regex assign1("\\s*assign\\s+(\\w+\\[\\d+\\]|\\w+)\\s+\\=\\s+(\\w+\\[\\d+\\]|\\w+)\\s*;\\s*");
     std::smatch results;
     
     if(std::regex_match(line, results, sWire))
     {
-        int wType;
-        if(results[1] == "wire") wType = 0;
-        else if(results[1] == "input") wType = 1;
-        else wType = 2; //else it's an output
-        
-        w = new wire(results[2], wType);
-        wireMap.insert(std::pair<std::string, wire*> (results[2], w));
+        std::cout << "Wire Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
+        w = new wire(results.str(2), results.str(1));
+        wireMap.insert(std::pair<std::string, wire*> (results.str(2), w));
     }
     else if (std::regex_match(line, results, mWire))
     {
-        int wType;
-        if(results[1] == "wire") wType = 0;
-        else if(results[1] == "input") wType = 1;
-        else wType = 2; //else it's an output
-        
-        for(int i = std::atoi(results.str(3).c_str()); i < std::atoi(results.str(2).c_str()); i++){
+        std::cout << "Wire bus Found " << results.str(1) << ' ' <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
+        for(int i = std::atoi(results.str(3).c_str()); i <= std::atoi(results.str(2).c_str()); i++){
             std::string x = results.str(4);
             x += '[' + std::to_string(i) + ']';
-            w = new wire(x, wType);
+            w = new wire(x, results.str(1));
             wireMap.insert(std::pair<std::string, wire*>(x, w));
         }
     }
     else if (std::regex_match(line, results, rGate))
     {
-        gates.push_back(new gate(results[2], results[1]));
-        gates[gates.size()-1]->gateType = results[1];
-        gates[gates.size()-1]->gateName = results[2];
-        gateMap.insert(std::pair<std::string, int> (results[2], gates.size()-1));
-        gates[gates.size()-1]->isFlip = (results[1] == "DFFPOSX1") ? true : false;
+        
+        std::cout << "Gate Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
+        gates.push_back(new gate(results.str(2), results.str(1)));
+        gateMap.insert(std::pair<std::string, int> (results.str(2), gates.size()-1));
+        gates[gates.size()-1]->setIsFlip((results[1] == "DFFPOSX1") ? true : false);
     }
-    else if (std::regex_match(line, results, in1))
-        gates[gates.size()-1]->in1 = wireMap[results[1]];
+    else if (std::regex_match(line, results, in1)){
+        std::cout<<"Input: "<< results.str(2) << " found" << std::endl;
+        gates[gates.size()-1]->setIn1(wireMap[results.str(2)]);
+    }
     
-    else if (std::regex_match(line, results, in2))
-        gates[gates.size()-1]->in2 = wireMap[results[1]];
+    else if (std::regex_match(line, results, in2)){
+        std::cout<<"Input: "<< results.str(2) << " found" << std::endl;
+        gates[gates.size()-1]->setIn2(wireMap[results.str(2)]);
+    }
     
-    else if (std::regex_match(line, results, rOut))
-        gates[gates.size()-1]->out1 = wireMap[results[1]];
+    else if (std::regex_match(line, results, rOut)){
+        std::cout<<"Output: "<< results.str(2) << " found" << std::endl;
+        gates[gates.size()-1]->setOut(wireMap[results.str(2)]);
+    }
+    
     else if (std::regex_match(line, results, assign1))
     {
+        std::cout<<"Assign: "<< results.str(1) << " to" << results.str(2)<< " found" <<std::endl;
         wire *temp1, *temp2;
-        temp1 = wireMap[results[1]];
-        temp2 = wireMap[results[2]];
+        temp1 = wireMap[results.str(1)];
+        temp2 = wireMap[results.str(2)];
         temp1->setAssign(temp2);
     }
 }
@@ -97,4 +96,17 @@ void Circuit::openFile(std::string filePath)
 //            }
         }
     }
+}
+void Circuit::printGates()
+{
+    for(int i = 0; i < gates.size(); i++)
+    {
+        std::cout << gates[i]->getType() << ' ' << gates[i]->getName() << std::endl;
+        std::cout << '\t' << "iPort1: " << gates[i]->getIn1()->getName() << " type: " << gates[i]->getIn1()->getWireType() << std::endl;
+        if(gates[i]->getIn2() != NULL)
+            std::cout << '\t' << "iPort2: " << gates[i]->getIn2()->getName() << " type: " << gates[i]->getIn2()->getWireType() << std::endl;
+        
+        std::cout << '\t' << "oPort3: " << gates[i]->getOut()->getName() << " type: " << gates[i]->getOut()->getWireType() << std::endl;
+    }
+    std::cout << "---------------Done Printing Gates----------------\n";
 }

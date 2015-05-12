@@ -9,7 +9,7 @@
 #include "wire.h"
 
 
-wire::wire(std::string name, int type)
+wire::wire(std::string name, std::string type)
 {
     wireName = name;
     wireType = type;
@@ -21,7 +21,7 @@ std::string wire::getName()
 {
     return wireName;
 }
-int wire::getWireType()
+std::string wire::getWireType()
 {
     return wireType;
 }

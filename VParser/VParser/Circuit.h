@@ -31,7 +31,8 @@ public:
     Circuit();
     void parseLine(std::string);
     void openFile(std::string);
-    
+    void printGates();
+    void printWires();
 };
 
 #endif /* defined(__VParser__Circuit__) */

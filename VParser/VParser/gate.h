@@ -18,12 +18,28 @@ class gate
 public:
     gate(std::string, std::string);
     
-    std::string gateName;
-    std::string gateType;
+    void setIn1(wire*);
+    wire* getIn1();
+    
+    std::string getName();
+    std::string getType();
+    
+    void setIsFlip(bool);
+    bool getIsFlip();
+    
+    void setIn2(wire*);
+    wire* getIn2();
+    
+    void setOut(wire*);
+    wire* getOut();
+    
+private:
     bool isFlip;
     wire* in1;
     wire* in2;
     wire* out1;
+    std::string gateName;
+    std::string gateType;
 };
 
 #endif /* defined(__VParser__gate__) */
