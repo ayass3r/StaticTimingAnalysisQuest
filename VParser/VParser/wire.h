@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 class wire
 {
@@ -32,6 +33,10 @@ public:
     
     void setNetCap(float);
     float getNetCap();
+    
+    //void setNSource(Node*);
+    
+    //void setNDestination(Node*);
 };
 
 #endif /* defined(__VParser__wire__) */

@@ -40,6 +40,9 @@ private:
     wire* out1;
     std::string gateName;
     std::string gateType;
+    float loadCapacitance; // total load capacitance on the output  pin
+    float outSlewRate; //slew rate of the output pin
+    float delay; //delay of the gate
 };
 
 #endif /* defined(__VParser__gate__) */

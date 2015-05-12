@@ -28,13 +28,13 @@ void Circuit::parseLine(std::string line)
     
     if(std::regex_match(line, results, sWire))
     {
-        std::cout << "Wire Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
+        std::cout << results.str(1) << " Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
         w = new wire(results.str(2), results.str(1));
         wireMap.insert(std::pair<std::string, wire*> (results.str(2), w));
     }
     else if (std::regex_match(line, results, mWire))
     {
-        std::cout << "Wire bus Found " << results.str(1) << ' ' <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
+        std::cout << results.str(1) << " bus Found " << results.str(1) << ' ' <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
         for(int i = std::atoi(results.str(3).c_str()); i <= std::atoi(results.str(2).c_str()); i++){
             std::string x = results.str(4);
             x += '[' + std::to_string(i) + ']';

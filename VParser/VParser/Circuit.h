@@ -10,8 +10,8 @@
 #define __VParser__Circuit__
 
 
-#include "Edge.h"
 #include "Node.h"
+#include "Edge.h"
 #include "wire.h"
 #include "gate.h"
 #include <stdio.h>

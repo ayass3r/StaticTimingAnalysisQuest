@@ -11,8 +11,8 @@
 		7799210F1AFFC12300B0F100 /* wire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7799210D1AFFC12300B0F100 /* wire.cpp */; };
 		779921181B00CD7300B0F100 /* gate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779921161B00CD7300B0F100 /* gate.cpp */; };
 		77E7FEF61AFDDB5D00D716B2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEF51AFDDB5D00D716B2 /* main.cpp */; };
-		77E7FEFE1AFDDBA000D716B2 /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEFC1AFDDBA000D716B2 /* Node.cpp */; };
-		77E7FF011AFDDD9A00D716B2 /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEFF1AFDDD9A00D716B2 /* Edge.cpp */; };
+		77E964F31B0286CB009A160F /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E964F11B0286CB009A160F /* Node.cpp */; };
+		77E964F61B0286D4009A160F /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E964F41B0286D4009A160F /* Edge.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,10 +36,10 @@
 		779921171B00CD7300B0F100 /* gate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gate.h; sourceTree = "<group>"; };
 		77E7FEF21AFDDB5D00D716B2 /* VParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E7FEF51AFDDB5D00D716B2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		77E7FEFC1AFDDBA000D716B2 /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
-		77E7FEFD1AFDDBA000D716B2 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
-		77E7FEFF1AFDDD9A00D716B2 /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Edge.cpp; sourceTree = "<group>"; };
-		77E7FF001AFDDD9A00D716B2 /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
+		77E964F11B0286CB009A160F /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
+		77E964F21B0286CB009A160F /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		77E964F41B0286D4009A160F /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Edge.cpp; sourceTree = "<group>"; };
+		77E964F51B0286D4009A160F /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,16 +73,16 @@
 			isa = PBXGroup;
 			children = (
 				77E7FEF51AFDDB5D00D716B2 /* main.cpp */,
-				77E7FEFC1AFDDBA000D716B2 /* Node.cpp */,
-				77E7FEFD1AFDDBA000D716B2 /* Node.h */,
-				77E7FEFF1AFDDD9A00D716B2 /* Edge.cpp */,
-				77E7FF001AFDDD9A00D716B2 /* Edge.h */,
 				7799210A1AFFADB900B0F100 /* Circuit.cpp */,
 				7799210B1AFFADB900B0F100 /* Circuit.h */,
 				7799210D1AFFC12300B0F100 /* wire.cpp */,
 				7799210E1AFFC12300B0F100 /* wire.h */,
 				779921161B00CD7300B0F100 /* gate.cpp */,
 				779921171B00CD7300B0F100 /* gate.h */,
+				77E964F11B0286CB009A160F /* Node.cpp */,
+				77E964F21B0286CB009A160F /* Node.h */,
+				77E964F41B0286D4009A160F /* Edge.cpp */,
+				77E964F51B0286D4009A160F /* Edge.h */,
 			);
 			path = VParser;
 			sourceTree = "<group>";
@@ -143,12 +143,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77E7FF011AFDDD9A00D716B2 /* Edge.cpp in Sources */,
+				77E964F61B0286D4009A160F /* Edge.cpp in Sources */,
 				77E7FEF61AFDDB5D00D716B2 /* main.cpp in Sources */,
 				779921181B00CD7300B0F100 /* gate.cpp in Sources */,
-				77E7FEFE1AFDDBA000D716B2 /* Node.cpp in Sources */,
 				7799210F1AFFC12300B0F100 /* wire.cpp in Sources */,
 				7799210C1AFFADB900B0F100 /* Circuit.cpp in Sources */,
+				77E964F31B0286CB009A160F /* Node.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

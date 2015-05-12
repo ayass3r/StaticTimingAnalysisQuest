@@ -2,7 +2,7 @@
 //  Node.h
 //  VParser
 //
-//  Created by Mahmoud Khodary on 5/9/15.
+//  Created by Mahmoud Khodary on 5/12/15.
 //  Copyright (c) 2015 Mahmoud Khodary. All rights reserved.
 //
 
@@ -10,26 +10,13 @@
 #define __VParser__Node__
 
 #include <stdio.h>
-#include <iostream>
-#include <string>
+#include "gate.h"
 
 class Node
 {
 private:
-    std::string nodeName; //name of the node
-    //gate &refGate -> this is a refrence to a gate in the liberty file
-    //inPort &refinPort -> this is a refrence to an input port
-    //outPort &refoutPort -> this is a refrence to an output port
-    float loadCapacitance; // total load capacitance on the output  pin
-    float outSlewRate; //slew rate of the output pin
-    float delay; //delay of the gate
+    gate* gNode;
 public:
-    Node(std::string);
-    
-    std::string getName(); //get name of the gate
-    
-    float calDelay(float inSlewRate); //calcu
-    float calOutSlewRate();
+    Node();
 };
-
 #endif /* defined(__VParser__Node__) */
