@@ -46,26 +46,25 @@ void Circuit::parseLine(std::string line)
         pGate = results.str(2);
         std::cout << "Gate Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
         g = new gate(results.str(2), results.str(1));
-        //gates.push_back(new gate(results.str(2), results.str(1)));
         gateMap.insert(std::pair<std::string, gate*> (results.str(2), g));
         gateMap[results.str(2)]->setIsFlip((results[1] == "DFFPOSX1") ? true : false);
     }
     else if (std::regex_match(line, results, in1)){
         std::cout<<"Input: "<< results.str(2) << " found" << std::endl;
         gateMap[pGate]->setIn1(results.str(2));
-        wireMap[results.str(2)]->setWSource(gateMap[pGate]);
+        wireMap[results.str(2)]->setWDestination(gateMap[pGate]);
     }
     
     else if (std::regex_match(line, results, in2)){
         std::cout<<"Input: "<< results.str(2) << " found" << std::endl;
         gateMap[pGate]->setIn2(results.str(2));
-        wireMap[results.str(2)]->setWSource(gateMap[pGate]);
+        wireMap[results.str(2)]->setWDestination(gateMap[pGate]);
     }
     
     else if (std::regex_match(line, results, rOut)){
         std::cout<<"Output: "<< results.str(2) << " found" << std::endl;
         gateMap[pGate]->setOut(results.str(2));
-        wireMap[results.str(2)]->setWDestination(gateMap[pGate]);
+        wireMap[results.str(2)]->setWSource(gateMap[pGate]);
     }
     
     else if (std::regex_match(line, results, assign1))
