@@ -7,9 +7,20 @@
 //
 
 #include <iostream>
+#include "Circuit.h"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
+    
+    Circuit myTest;
+    std::string filePath;
+    filePath = "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/VP/VP/code4.v";
+    
+    myTest.openFile(filePath);
+    std::cout<<"--------------Done Parsing--------------\n";
+    
+    myTest.printGates();
+    
     return 0;
 }
