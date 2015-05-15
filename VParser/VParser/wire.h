@@ -40,8 +40,11 @@ public:
     float getNetCap();
     
     void setWSource(gate*);
+    gate* getWSource();
     
     void setWDestination(gate*);
+    std::vector<gate*> getWDestionations();
+    
 };
 
 #endif /* defined(__VParser__wire__) */

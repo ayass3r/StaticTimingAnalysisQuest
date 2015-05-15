@@ -46,7 +46,15 @@ void wire::setWSource(gate* g)
 {
     wSource = g;
 }
+gate* wire::getWSource()
+{
+    return wSource;
+}
 void wire::setWDestination(gate* g)
 {
     wDestinations.push_back(g);
+}
+std::vector<gate* > wire::getWDestionations()
+{
+    return wDestinations;
 }

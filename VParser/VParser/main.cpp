@@ -17,10 +17,13 @@ int main(int argc, const char * argv[]) {
     std::string filePath;
     filePath = "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/VP/VP/code4.v";
     
+    myTest.createRoot();
+    //myTest.createEnd();
     myTest.openFile(filePath);
     std::cout<<"--------------Done Parsing--------------\n";
     
     myTest.printGates();
+    myTest.printWires();
     
     return 0;
 }
