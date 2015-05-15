@@ -11,17 +11,23 @@
 
 #include <stdio.h>
 #include "gate.h"
+#include <iostream>
+#include <string>
 
 class Edge
 {
 private:
+    
     gate* gSource;
     gate* gDestination;
     bool topVisited;
 public:
-    Edge(gate*, gate*);
+    std::string wireName;
+    Edge(gate*, gate*, std::string);
     void setTopVisited(bool);
     bool getTopVisited();
+    gate* getSource();
+    gate* getDestination();
 };
 
 #endif /* defined(__VParser__Edge__) */

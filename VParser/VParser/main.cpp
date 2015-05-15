@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <vector>
 #include "Circuit.h"
 
 int main(int argc, const char * argv[]) {
@@ -14,9 +15,10 @@ int main(int argc, const char * argv[]) {
     std::cout << "Hello, World!\n";
     
     Circuit myTest;
+    std::vector<gate*> gSorted;
     std::string filePath;
-    filePath = "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/VP/VP/code4.v";
-    
+    //filePath = "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/VP/VP/code4.v";
+    filePath = "/Users/macbookpro/Downloads/booth.g.v";
     myTest.createRoot();
     //myTest.createEnd();
     myTest.openFile(filePath);
@@ -25,5 +27,10 @@ int main(int argc, const char * argv[]) {
     myTest.printGates();
     myTest.printWires();
     
+    myTest.generateEges();
+    myTest.topSort();
+//    gSorted = myTest.topSort();
+//    for(int i = 0; i < gSorted.size(); i++)
+//        std::cout << i << ". " << gSorted[i]->getName()<<std::endl;
     return 0;
 }

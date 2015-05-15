@@ -19,6 +19,7 @@
 #include <map>
 #include <regex>
 #include <fstream>
+#include <queue>
 
 class Circuit
 {  
@@ -40,6 +41,7 @@ public:
     void openFile(std::string);
     void printGates();
     void printWires();
+    std::vector<gate*> topSort();
 };
 
 #endif /* defined(__VParser__Circuit__) */

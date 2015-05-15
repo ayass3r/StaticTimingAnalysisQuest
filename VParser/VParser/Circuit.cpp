@@ -131,23 +131,19 @@ void Circuit::createRoot()
     
     std::cout << gateMap["root"]->getName() << std::endl;
 }
-/*void Circuit::createEnd()
-{
-    g = new gate("end", "1");
-    w = new wire("end", "1");
-    g->setIn1("end");
-    w->setWDestination(g);
-    gateMap.insert(std::pair<std::string, gate*> ("end", g));
-    wireMap.insert(std::pair<std::string, wire*> ("end", w));
-}*/
 void Circuit::generateEges()
 {
     Edge* e;
     for(std::map<std::string, wire*>::iterator i = wireMap.begin(); i != wireMap.end(); i++)
     {
         for(int j = 0; j < i->second->getWDestionations().size(); j++)
-            e = new Edge(i->second->getWSource(), i->second->getWDestionations()[j]);
+        {
+            e = new Edge(i->second->getWSource(), i->second->getWDestionations()[j], i->second->getName());
+            vEdges.push_back(e);
+        }
     }
+//    for (int i = 0; i < vEdges.size(); i++)
+//        std::cout << i << ". "<<vEdges[i]->wireName <<"\nSource: "<< vEdges[i]->getSource()->getName() << "\nDestination: " << vEdges[i]->getDestination()->getName()<< std::endl;
 }
 void Circuit::openFile(std::string filePath)
 {
@@ -171,6 +167,43 @@ void Circuit::openFile(std::string filePath)
             //}
         }
     }
+}
+std::vector<gate*> Circuit::topSort()
+{
+    std::queue<gate*> S;
+    std::vector<gate*> L;
+    gate* n;
+    bool setToS;
+    S.push(gateMap["root"]);
+    while (S.size())
+    {
+        n = S.front();
+        S.pop();
+        L.push_back(n);
+        for (int i = 0; i < vEdges.size(); i++)
+        {
+//            std::cout<<n->getName()<<std::endl;
+//            std::cout<<vEdges[i]->getSource()->getName()<<std::endl;
+            if ((vEdges[i]->getSource()->getName() == n->getName()) && !vEdges[i]->getTopVisited())
+            {
+                vEdges[i]->setTopVisited(true);
+                setToS = true;
+                for (int j = 0; j < vEdges.size(); j++)
+                    if ((vEdges[j]->getDestination()->getName() == vEdges[i]->getDestination()->getName()) && !vEdges[j]->getTopVisited())
+                    {
+                        setToS = false; break;
+                    }
+                if (setToS) S.push(vEdges[i]->getDestination());
+            }
+        }
+    }
+    for (int i = 0; i < vEdges.size(); i++) if (!vEdges[i]->getTopVisited()) {std::cout <<"Graph has cycles"<<std::endl; break;}
+    
+    for(int i = 0; i < L.size(); i++)
+        std::cout << i << ". " << L[i]->getName()<<std::endl;
+    
+    return L;
+    
 }
 void Circuit::printGates()
 {
