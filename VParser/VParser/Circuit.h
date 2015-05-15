@@ -10,7 +10,6 @@
 #define __VParser__Circuit__
 
 
-//#include "Edge.h"
 #include "wire.h"
 #include "gate.h"
 #include <stdio.h>
@@ -26,13 +25,12 @@ class Circuit
 private:
     wire* w;
     gate* g;
-    //Edge* e;
+    std::string pGate;
     std::map<std::string, wire*> wireMap;
     std::map<std::string, gate*> gateMap;
-    //std::vector<gate*> gates;
-    std::string pGate;
 public:
     Circuit();
+    void createRoot();
     void parseLine(std::string);
     void openFile(std::string);
     void printGates();

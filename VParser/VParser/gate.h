@@ -11,10 +11,21 @@
 
 #include <stdio.h>
 #include <string>
-//#include "wire.h"
 
 class gate
 {
+    
+private:
+    bool isFlip;
+    std::string in1;
+    std::string in2;
+    std::string out1;
+    std::string gateName;
+    std::string gateType;
+    float loadCapacitance; // total load capacitance on the output  pin
+    float outSlewRate; //slew rate of the output pin
+    float delay; //delay of the gate
+    
 public:
     gate(std::string, std::string);
     
@@ -32,17 +43,6 @@ public:
     
     void setOut(std::string);
     std::string getOut();
-    
-private:
-    bool isFlip;
-    std::string in1;
-    std::string in2;
-    std::string out1;
-    std::string gateName;
-    std::string gateType;
-    float loadCapacitance; // total load capacitance on the output  pin
-    float outSlewRate; //slew rate of the output pin
-    float delay; //delay of the gate
 };
 
 #endif /* defined(__VParser__gate__) */

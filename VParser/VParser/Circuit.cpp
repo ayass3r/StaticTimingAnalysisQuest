@@ -12,6 +12,7 @@
 Circuit::Circuit()
 {
     w = NULL;
+    g = NULL;
     pGate = "";
 }
 void Circuit::parseLine(std::string line)
@@ -27,17 +28,33 @@ void Circuit::parseLine(std::string line)
     
     if(std::regex_match(line, results, sWire))
     {
-        std::cout << results.str(1) << " Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
+        std::cout << results.str(1) << " Found " <<results.str(2) << std::endl;
         w = new wire(results.str(2), results.str(1));
+        if(results.str(1) == "input"){
+            g = new gate(results.str(2), results.str(1));
+            g->setIn1("root");
+            g->setOut(results.str(2));
+            w->setWSource(g);
+            wireMap["root"]->setWDestination(g);
+            gateMap.insert(std::pair<std::string, gate*> (results.str(2), g));
+        }
         wireMap.insert(std::pair<std::string, wire*> (results.str(2), w));
     }
     else if (std::regex_match(line, results, mWire))
     {
-        std::cout << results.str(1) << " bus Found " << results.str(1) << ' ' <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
+        std::cout << results.str(1) << " bus Found " <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
         for(int i = std::atoi(results.str(3).c_str()); i <= std::atoi(results.str(2).c_str()); i++){
             std::string x = results.str(4);
             x += '[' + std::to_string(i) + ']';
             w = new wire(x, results.str(1));
+            if(results.str(1) == "input"){
+                g = new gate(x, results.str(1));
+                g->setIn1("root");
+                g->setOut(x);
+                w->setWSource(g);
+                wireMap["root"]->setWDestination(g);
+                gateMap.insert(std::pair<std::string, gate*> (x, g));
+            }
             wireMap.insert(std::pair<std::string, wire*>(x, w));
         }
     }
@@ -75,6 +92,15 @@ void Circuit::parseLine(std::string line)
         temp2 = wireMap[results.str(2)];
         temp1->setAssign(temp2);
     }
+}
+void Circuit::createRoot()
+{
+    g = new gate("root", "0");
+    w = new wire("root", "0");
+    g->setOut("root");
+    w->setWSource(g);
+    gateMap.insert(std::pair<std::string, gate*> ("root", g));
+    wireMap.insert(std::pair<std::string, wire*> ("root", w));
 }
 void Circuit::openFile(std::string filePath)
 {
