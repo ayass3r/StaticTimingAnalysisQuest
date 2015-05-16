@@ -16,7 +16,7 @@ Circuit::Circuit()
     pGate = "";
     pGate2 = "";
 }
-void Circuit::parseLine(std::string line)
+bool Circuit::parseLine(std::string line)
 {
     std::regex sWire("\\s*(wire|input|output) +(\\w+)\\s*;\\s*");
     std::regex mWire("\\s*(wire|input|output)\\s+\\[(\\d+)\\:(\\d+)\\]\\s*(\\w+)\\s*;\\s*");
@@ -29,17 +29,20 @@ void Circuit::parseLine(std::string line)
     
     if(std::regex_match(line, results, sWire))
     {
-        std::cout << results.str(1) << " Found " <<results.str(2) << std::endl;
+        std::cout << results.str(1) <<results.str(2) << std::endl;
         w = new wire(results.str(2), results.str(1));
-        if(results.str(1) != "wire"){
+        if(results.str(1) != "wire")
+        {
             g = new gate(results.str(2), results.str(1));
-            if(results.str(1) == "input"){
+            if(results.str(1) == "input")
+            {
                 g->setIn1("root");
                 g->setOut(results.str(2));
                 w->setWSource(g);
                 wireMap["root"]->setWDestination(g);
             }
-            else {
+            else
+            {
                 g->setIn1(results.str(2));
                 w->setWDestination(g);
             }
@@ -49,21 +52,25 @@ void Circuit::parseLine(std::string line)
     }
     else if (std::regex_match(line, results, mWire))
     {
-        std::cout << results.str(1) << " bus Found " <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
-        for(int i = std::atoi(results.str(3).c_str()); i <= std::atoi(results.str(2).c_str()); i++){
+        std::cout << results.str(1) << " bus " <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
+        for(int i = std::atoi(results.str(3).c_str()); i <= std::atoi(results.str(2).c_str()); i++)
+        {
             std::string x = results.str(4);
             x += '[' + std::to_string(i) + ']';
             w = new wire(x, results.str(1));
-            if(results.str(1) != "wire"){
+            if(results.str(1) != "wire")
+            {
                 g = new gate(x, results.str(1));
-                if(results.str(1) == "input"){
+                if(results.str(1) == "input")
+                {
                     g->setIn1("root");
                     g->setOut(x);
                     w->setWSource(g);
                     wireMap["root"]->setWDestination(g);
                     gateMap.insert(std::pair<std::string, gate*> (x, g));
                 }
-                else {
+                else
+                {
                     g->setIn1(x);
                     w->setWDestination(g);
                 }
@@ -74,8 +81,9 @@ void Circuit::parseLine(std::string line)
     else if (std::regex_match(line, results, rGate))
     {
         pGate2 = pGate = results.str(2);
-        std::cout << "Gate Found " << results.str(1) << ' ' <<results.str(2) << std::endl;
-        if(results.str(1) == "DFFPOSX1"){
+        std::cout << "\nGate " << results.str(1) << ' ' <<results.str(2) << std::endl;
+        if(results.str(1) == "DFFPOSX1")
+        {
             pGate += "_input";
             pGate2 += "_output";
             g = new gate(pGate, results.str(1));
@@ -87,38 +95,41 @@ void Circuit::parseLine(std::string line)
             g = new gate(pGate2, results.str(1));
             gateMap.insert(std::pair<std::string, gate*> (pGate2, g));
         }
-        else{
+        else
+        {
             g = new gate(results.str(2), results.str(1));
             gateMap.insert(std::pair<std::string, gate*> (results.str(2), g));
         }
-        
     }
-    else if (std::regex_match(line, results, in1)){
-        std::cout<<"InputPin1: "<< results.str(2) << " found" << std::endl;
+    else if (std::regex_match(line, results, in1))
+    {
+        std::cout<<"InputPin1: "<< results.str(2) << std::endl;
         gateMap[pGate2]->setIn1(results.str(2));
         wireMap[results.str(2)]->setWDestination(gateMap[pGate2]);
     }
-    
-    else if (std::regex_match(line, results, in2)){
-        std::cout<<"InputPin2: "<< results.str(2) << " found" << std::endl;
+    else if (std::regex_match(line, results, in2))
+    {
+        std::cout<<"InputPin2: "<< results.str(2) << std::endl;
         gateMap[pGate2]->setIn2(results.str(2));
         wireMap[results.str(2)]->setWDestination(gateMap[pGate2]);
     }
-    
-    else if (std::regex_match(line, results, rOut)){
-        std::cout<<"OutputPin: "<< results.str(2) << " found" << std::endl;
+    else if (std::regex_match(line, results, rOut))
+    {
+        std::cout<<"OutputPin: "<< results.str(2) << std::endl;
         gateMap[pGate]->setOut(results.str(2));
         wireMap[results.str(2)]->setWSource(gateMap[pGate]);
     }
-    
     else if (std::regex_match(line, results, assign1))
     {
-        std::cout<<"Assign: "<< results.str(1) << " to" << results.str(2)<< " found" <<std::endl;
+        std::cout<<"Assign: "<< results.str(1) << " to" << results.str(2) <<std::endl;
         wire *temp1, *temp2;
         temp1 = wireMap[results.str(1)];
         temp2 = wireMap[results.str(2)];
         temp1->setAssign(temp2);
     }
+    else return false;
+    
+    return true;
 }
 void Circuit::createRoot()
 {
@@ -129,7 +140,7 @@ void Circuit::createRoot()
     gateMap.insert(std::pair<std::string, gate*> ("root", g));
     wireMap.insert(std::pair<std::string, wire*> ("root", w));
     
-    std::cout << gateMap["root"]->getName() << std::endl;
+    //std::cout << gateMap["root"]->getName() << std::endl;
 }
 void Circuit::generateEges()
 {
@@ -158,15 +169,11 @@ void Circuit::openFile(std::string filePath)
         while(!ins.eof())
         {
             std::getline(ins, line);
-            //try
-            //{
-            parseLine(line);
-            //}
-            //catch(std::exception& e){
-            //throw std::invalid_argument("file formate invalid");
-            //}
+            if(!parseLine(line))
+                std::cout << "\nNOT PARSED!: " << line << "\n\n";
         }
     }
+    ins.close();
 }
 std::vector<gate*> Circuit::topSort()
 {

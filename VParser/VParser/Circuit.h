@@ -37,7 +37,7 @@ public:
     //void createEnd();
     //void connect(bool);
     void generateEges();
-    void parseLine(std::string);
+    bool parseLine(std::string);
     void openFile(std::string);
     void printGates();
     void printWires();

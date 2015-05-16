@@ -21,6 +21,7 @@ int main(int argc, const char * argv[]) {
     filePath = "/Users/macbookpro/Downloads/booth.g.v";
     myTest.createRoot();
     //myTest.createEnd();
+    std::cout << "------------Parsing File...-----------\n";
     myTest.openFile(filePath);
     std::cout<<"--------------Done Parsing--------------\n";
     
