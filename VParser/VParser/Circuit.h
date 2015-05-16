@@ -45,6 +45,7 @@ public:
     void openCapFile(std::string);
     void printGates();
     void printWires();
+    void calcGatesOutputLoad();
     std::vector<gate*> topSort();
 };
 
