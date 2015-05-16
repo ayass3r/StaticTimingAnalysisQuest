@@ -13,9 +13,11 @@ gate::gate(std::string name, std::string type)
     gateName = name;
     gateType = type;
     isFlip = false;
+    loadCapacitance = 0;
     in1 = "";
     in2 = "";
     out1 = "";
+    flipSkew = 0;
 }
 void gate::setIsFlip(bool dflag)
 {
@@ -52,4 +54,20 @@ std::string gate::getName()
 std::string gate::getType()
 {
     return gateType;
+}
+void gate::setFlipSkew(float f)
+{
+    flipSkew = f;
+}
+float gate::getFlipSkew()
+{
+    return flipSkew;
+}
+void gate::setLoadCap(float f)
+{
+    loadCapacitance = f;
+}
+float gate::getLoadCap()
+{
+    return loadCapacitance;
 }

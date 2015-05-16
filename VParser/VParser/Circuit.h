@@ -39,6 +39,10 @@ public:
     void generateEges();
     bool parseLine(std::string);
     void openFile(std::string);
+    bool parseSkewLine(std::string);
+    void openSkewFile(std::string);
+    bool parseCapLine(std::string);
+    void openCapFile(std::string);
     void printGates();
     void printWires();
     std::vector<gate*> topSort();

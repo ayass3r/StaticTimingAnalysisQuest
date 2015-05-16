@@ -25,6 +25,7 @@ private:
     float loadCapacitance; // total load capacitance on the output  pin
     float outSlewRate; //slew rate of the output pin
     float delay; //delay of the gate
+    float flipSkew;
     
 public:
     gate(std::string, std::string);
@@ -43,6 +44,12 @@ public:
     
     void setOut(std::string);
     std::string getOut();
+
+    void setFlipSkew(float);
+    float getFlipSkew();
+
+    void setLoadCap(float);
+    float getLoadCap();
 };
 
 #endif /* defined(__VParser__gate__) */

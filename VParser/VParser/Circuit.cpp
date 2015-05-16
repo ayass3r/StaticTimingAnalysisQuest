@@ -16,6 +16,80 @@ Circuit::Circuit()
     pGate = "";
     pGate2 = "";
 }
+void Circuit::openCapFile(std::string filepath)
+{
+    std::ifstream ins;
+    std::string line;
+    
+    ins.open(filePath);
+    if(ins.fail()){
+        throw std::invalid_argument("Cap File path invaild!\n");
+    }
+    else{
+        while(!ins.eof())
+        {
+            std::getline(ins, line);
+            if(!parseCapLine(line))
+                std::cout << "\nNOT PARSED!: " << line << "\n\n";
+        }
+    }
+    ins.close();
+}
+bool Circuit::parseCapLine(std::string line)
+{
+    std::regex capLine("\\s*(\\S+)\\s+(\\d*.\\d*)");
+    std::smatch results;
+    std::string::size_type sz;
+
+    if (std::regex_match(line, results, capLine))
+    {
+        std::cout<<results.str(1)<<results.str(2)<<std::endl;
+        float x = stof(results.str(2), &sz);
+        wireMap[results.str(1)]->setNetCap(x);
+        return true;
+    }
+    else return false;
+}
+void Circuit::openSkewFile(std::string filepath)
+{
+    std::ifstream ins;
+    std::string line;
+    
+    ins.open(filePath);
+    if(ins.fail()){
+        throw std::invalid_argument("Skew File path invaild!\n");
+    }
+    else{
+        while(!ins.eof())
+        {
+            std::getline(ins, line);
+            if(!parseSkewLine(line))
+                std::cout << "\nNOT PARSED!: " << line << "\n\n";
+        }
+    }
+    ins.close();
+}
+bool Circuit::parseSkewLine(std::string line)
+{
+    std::regex skewLine("\\s*(\\S+)\\s+(\\d*.\\d*)");
+    std::smatch results;
+    std::string::size_type sz;
+
+    if (std::regex_match(line, results, skewLine))
+    {
+        std::cout<<results.str(1)<<results.str(2)<<std::endl;
+        float x = stof(results.str(2), &sz);
+        if (gateMap[results.str(1)]->getIsFlip())
+            gateMap[results.str(1)]->setFlipSkew(x);
+        else 
+        {
+            std::cout << "Flip Flop doesn't exist or Gate is not flip flop"<< std::endl;
+            return false;
+        }
+        return true;
+    }
+    else return false;
+}
 bool Circuit::parseLine(std::string line)
 {
     std::regex sWire("\\s*(wire|input|output) +(\\w+)\\s*;\\s*");
@@ -175,6 +249,7 @@ void Circuit::openFile(std::string filePath)
     }
     ins.close();
 }
+
 std::vector<gate*> Circuit::topSort()
 {
     std::queue<gate*> S;
@@ -187,8 +262,8 @@ std::vector<gate*> Circuit::topSort()
         n = S.front();
         S.pop();
         L.push_back(n);
-        for (int i = 0; i < vEdges.size(); i++)
-        {
+  //      for (int i = 0; i < vEdges.size(); i++)
+ //       {
 //            std::cout<<n->getName()<<std::endl;
 //            std::cout<<vEdges[i]->getSource()->getName()<<std::endl;
             if ((vEdges[i]->getSource()->getName() == n->getName()) && !vEdges[i]->getTopVisited())
@@ -202,7 +277,7 @@ std::vector<gate*> Circuit::topSort()
                     }
                 if (setToS) S.push(vEdges[i]->getDestination());
             }
-        }
+//        }
     }
     for (int i = 0; i < vEdges.size(); i++) if (!vEdges[i]->getTopVisited()) {std::cout <<"Graph has cycles"<<std::endl; break;}
     
@@ -239,4 +314,24 @@ void Circuit::printWires()
             std::cout << '\t' << "wDestinations: " << i->second->getWDestionations()[x]->getName() << std::endl;
     }
     std::cout << "---------------Done Printing Wires----------------\n";
+}
+void Circuit::calcGatesOutputLoad()
+{
+    float tempC;
+    for(std::map<std::string, gate*>::iterator i = gateMap.begin(); i != gateMap.end(); i++)
+    {
+        if (i->getType() != "input" && i->getType() != "output")
+        {
+            tempC = i->getLoadCap();
+            tempC+=wireMap[i->getOut()]->getLoadCap(); //add capacitance of output wire
+            for (int j = 0; j < wireMap[i->getOut()]->getWDestionations().size(); j++) //loop over the fan out of gate
+            {
+                if (gateMap[wireMap[i->getOut()]->getWDestionations()[j]].getIn1() == wireMap[i->getOut()].getName)
+                    // add capacitance of pin In1 of gate type to tempC
+                else if (gateMap[wireMap[i->getOut()]->getWDestionations()[j]].getIn2() == wireMap[i->getOut()].getName)
+                    // add capacitance of pin In2 of gate type to tempC
+            }
+        }
+        i->setLoadCap(tempC);
+    }
 }
