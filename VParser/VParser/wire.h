@@ -25,6 +25,7 @@ private:
     
     float netCapacitance;
     float inSlewRate;
+    
     wire* assignWire;
     
 public:

@@ -47,6 +47,7 @@ public:
     void printWires();
     void calcGatesOutputLoad();
     std::vector<gate*> topSort();
+    void trvGate(std::vector<gate*>);
 };
 
 #endif /* defined(__VParser__Circuit__) */

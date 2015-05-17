@@ -71,7 +71,7 @@ void Circuit::openSkewFile(std::string filepath)
 }
 bool Circuit::parseSkewLine(std::string line)
 {
-    std::regex skewLine("\\s*(\\S+)\\s+(\\d*.\\d*)");
+    std::regex skewLine("\\s*(\\S+)\\s+(\\d*.\\d*)\\s+(\\d*.\\d*)\\s*");
     std::smatch results;
     std::string::size_type sz;
 
@@ -79,9 +79,15 @@ bool Circuit::parseSkewLine(std::string line)
     {
         std::cout<<results.str(1)<<results.str(2)<<std::endl;
         float x = stof(results.str(2), &sz);
-        if (gateMap[results.str(1)]->getIsFlip())
-            gateMap[results.str(1)]->setFlipSkew(x);
-        else 
+        float y = stof(results.str(3), &sz);
+        if (gateMap[results.str(1)+"_input"]->getIsFlip()){
+            gateMap[results.str(1)+"_input"]->setFlipSkew(x);
+            gateMap[results.str(1)+"_input"]->setFInSlew(y);
+        
+            gateMap[results.str(1)+"_output"]->setFlipSkew(x);
+            gateMap[results.str(1)+"_output"]->setFInSlew(y);
+        }
+        else
         {
             std::cout << "Flip Flop doesn't exist or Gate is not flip flop"<< std::endl;
             return false;
@@ -167,11 +173,14 @@ bool Circuit::parseLine(std::string line)
             gateMap[pGate]->setIsFlip(true);
             
             g = new gate(pGate2, results.str(1));
+            g->setFlipIn(true);
             gateMap.insert(std::pair<std::string, gate*> (pGate2, g));
+            gateMap[pGate2]->setIsFlip(true);
         }
         else
         {
             g = new gate(results.str(2), results.str(1));
+            g->setFlipIn(false);
             gateMap.insert(std::pair<std::string, gate*> (results.str(2), g));
         }
     }
@@ -229,6 +238,8 @@ void Circuit::generateEges()
                 pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn2();
             
             e = new Edge(i->second->getWSource(), i->second->getWDestionations()[j], i->second->getName(), pin);
+            e->wireName = i->second->getName();
+            e->setNCapacitance(i->second->getNetCap());
             vEdges.push_back(e);
         }
     }
@@ -338,5 +349,61 @@ void Circuit::calcGatesOutputLoad()
             }
         }
         i->second->setLoadCap(tempC);
+    }
+}
+void Circuit::trvGate(std::vector<gate *> sVec)
+{
+    float max_slew = 0, max_delay = 0;
+    float temp1, temp2;
+    std::vector<Edge*>in, out;
+    for(int i = 0; i < sVec.size(); i++)
+    {
+        if(sVec[i]->getName() == "root")
+        {
+            sVec[i]->setDelay(0);
+            for(int j = 0; j < vEdges.size(); j++)
+                if(vEdges[j]->wireName == "root")
+                    vEdges[j]->setSlewRate(0);
+           
+        }
+        else if(sVec[i]->getType() == "input")
+        {
+            sVec[i]->setDelay(0);
+            for(int j = 0; j < vEdges.size(); j++)
+                if(vEdges[j]->wireName == sVec[i]->getName())
+                    vEdges[j]->setSlewRate(0.03);
+        }
+        else if (sVec[i]->getFlipIn())
+        {
+            //temp1 = calOutSlewRate(sVec[i]->getFInSlew(), sVec[i]->getLoadCap());
+            //temp2 = calcDelay()
+            sVec[i]->setDelay(temp2);
+            for(int j = 0; j < vEdges.size(); j++)
+                if(vEdges[j]->getSource()->getName() == sVec[i]->getName())
+                    vEdges[j]->setSlewRate(temp1);
+        }
+        else if (!sVec[i]->getFlipIn() && sVec[i]->getType() == "DFFPOSX1")
+        {
+            sVec[i]->setDelay(0);
+        }
+        else if (sVec[i]->getName() != "output")
+        {
+            for(int j = 0; j < vEdges.size(); j++)
+            {
+                Edge* e = vEdges[j];
+                
+                if(sVec[i]->getName() == vEdges[j]->getDestination()->getName())
+                    in.push_back(e);
+                else if(sVec[i]->getName() == vEdges[j]->getSource()->getName())
+                    out.push_back(e);
+            }
+            for(int z = 0; z < in.size(); z++)
+                //temp1 = calOutSlewRate(in[z]->getSlewRate, sVec[i]->getLoadCap());
+                //temp2 = calcDelay();
+                //get max
+                ;
+            for(int y = 0; y < out.size(); y++)
+                out[y]->setSlewRate(max_slew);
+        }
     }
 }

@@ -17,7 +17,7 @@ gate::gate(std::string name, std::string type)
     in1 = "";
     in2 = "";
     out1 = "";
-    flipSkew = 0;
+    clkSkew = 0.0;
 }
 void gate::setIsFlip(bool dflag)
 {
@@ -57,11 +57,11 @@ std::string gate::getType()
 }
 void gate::setFlipSkew(float f)
 {
-    flipSkew = f;
+    clkSkew = f;
 }
 float gate::getFlipSkew()
 {
-    return flipSkew;
+    return clkSkew;
 }
 void gate::setLoadCap(float f)
 {
@@ -70,4 +70,12 @@ void gate::setLoadCap(float f)
 float gate::getLoadCap()
 {
     return loadCapacitance;
+}
+void gate::setFlipIn(bool i)
+{
+    fIsIn = i;
+}
+bool gate::getFlipIn()
+{
+    return fIsIn;
 }

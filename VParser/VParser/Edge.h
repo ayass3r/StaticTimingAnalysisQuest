@@ -22,7 +22,15 @@ private:
     gate* gDestination;
     std::string pin;
     bool topVisited;
+    float netCapacitance;
+    float inSlewRate;
 public:
+    void setNCapacitance(float);
+    float getNCapacitance();
+    
+    void setSlewRate(float);
+    float getSlewRate();
+    
     std::string wireName;
     Edge(gate*, gate*, std::string, std::string);
     void setTopVisited(bool);
