@@ -8,7 +8,7 @@
 
 #include "Edge.h"
 
-Edge::Edge(gate* source, gate* destination, std::string name)
+Edge::Edge(gate* source, gate* destination, std::string name, std::string p)
 {
     if(source == NULL || destination==NULL)
         std::cout << "Null pointer" << name << " "<< std::endl ;
@@ -16,6 +16,7 @@ Edge::Edge(gate* source, gate* destination, std::string name)
     gDestination = destination;
     topVisited = false;
     wireName = name;
+    pin = p;
 }
 
 gate* Edge::getSource()
@@ -33,4 +34,8 @@ void Edge::setTopVisited(bool v)
 bool Edge::getTopVisited()
 {
     return topVisited;
+}
+std::string Edge::getPin()
+{
+    return pin;
 }

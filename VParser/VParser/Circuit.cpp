@@ -21,7 +21,7 @@ void Circuit::openCapFile(std::string filepath)
     std::ifstream ins;
     std::string line;
     
-    ins.open(filePath);
+    ins.open(filepath);
     if(ins.fail()){
         throw std::invalid_argument("Cap File path invaild!\n");
     }
@@ -55,7 +55,7 @@ void Circuit::openSkewFile(std::string filepath)
     std::ifstream ins;
     std::string line;
     
-    ins.open(filePath);
+    ins.open(filepath);
     if(ins.fail()){
         throw std::invalid_argument("Skew File path invaild!\n");
     }
@@ -219,11 +219,16 @@ void Circuit::createRoot()
 void Circuit::generateEges()
 {
     Edge* e;
+    std::string pin="";
     for(std::map<std::string, wire*>::iterator i = wireMap.begin(); i != wireMap.end(); i++)
     {
         for(int j = 0; j < i->second->getWDestionations().size(); j++)
         {
-            e = new Edge(i->second->getWSource(), i->second->getWDestionations()[j], i->second->getName());
+            pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn1();
+            if(gateMap[i->second->getWDestionations()[j]->getName()]->getIn2() == i->second->getName())
+                pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn2();
+            
+            e = new Edge(i->second->getWSource(), i->second->getWDestionations()[j], i->second->getName(), pin);
             vEdges.push_back(e);
         }
     }
@@ -249,7 +254,6 @@ void Circuit::openFile(std::string filePath)
     }
     ins.close();
 }
-
 std::vector<gate*> Circuit::topSort()
 {
     std::queue<gate*> S;
@@ -262,8 +266,8 @@ std::vector<gate*> Circuit::topSort()
         n = S.front();
         S.pop();
         L.push_back(n);
-  //      for (int i = 0; i < vEdges.size(); i++)
- //       {
+        for (int i = 0; i < vEdges.size(); i++)
+        {
 //            std::cout<<n->getName()<<std::endl;
 //            std::cout<<vEdges[i]->getSource()->getName()<<std::endl;
             if ((vEdges[i]->getSource()->getName() == n->getName()) && !vEdges[i]->getTopVisited())
@@ -277,7 +281,7 @@ std::vector<gate*> Circuit::topSort()
                     }
                 if (setToS) S.push(vEdges[i]->getDestination());
             }
-//        }
+        }
     }
     for (int i = 0; i < vEdges.size(); i++) if (!vEdges[i]->getTopVisited()) {std::cout <<"Graph has cycles"<<std::endl; break;}
     
@@ -317,21 +321,22 @@ void Circuit::printWires()
 }
 void Circuit::calcGatesOutputLoad()
 {
-    float tempC;
+    float tempC = 0.0;
     for(std::map<std::string, gate*>::iterator i = gateMap.begin(); i != gateMap.end(); i++)
     {
-        if (i->getType() != "input" && i->getType() != "output")
+        if (i->second->getType() != "input" && i->second->getType() != "output")
         {
-            tempC = i->getLoadCap();
-            tempC+=wireMap[i->getOut()]->getLoadCap(); //add capacitance of output wire
-            for (int j = 0; j < wireMap[i->getOut()]->getWDestionations().size(); j++) //loop over the fan out of gate
+            tempC = i->second->getLoadCap();
+            tempC += wireMap[i->second->getOut()]->getNetCap();//add capacitance of output wire
+            for (int j = 0; j < vEdges.size(); j++) //loop over the fan out of gate
             {
-                if (gateMap[wireMap[i->getOut()]->getWDestionations()[j]].getIn1() == wireMap[i->getOut()].getName)
+                if (vEdges[j]->getSource()->getName() == i->second->getName())
                     // add capacitance of pin In1 of gate type to tempC
-                else if (gateMap[wireMap[i->getOut()]->getWDestionations()[j]].getIn2() == wireMap[i->getOut()].getName)
-                    // add capacitance of pin In2 of gate type to tempC
+                {
+                    //retrievFn(vEdges[j]->getDestination()->getType(), vEdges[j]->getPin());
+                }
             }
         }
-        i->setLoadCap(tempC);
+        i->second->setLoadCap(tempC);
     }
 }

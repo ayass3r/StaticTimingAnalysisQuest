@@ -20,12 +20,14 @@ private:
     
     gate* gSource;
     gate* gDestination;
+    std::string pin;
     bool topVisited;
 public:
     std::string wireName;
-    Edge(gate*, gate*, std::string);
+    Edge(gate*, gate*, std::string, std::string);
     void setTopVisited(bool);
     bool getTopVisited();
+    std::string getPin();
     gate* getSource();
     gate* getDestination();
 };
