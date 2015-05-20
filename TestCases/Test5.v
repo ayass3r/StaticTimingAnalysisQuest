@@ -1,5 +1,4 @@
 input A;
-input clk;
 output f;
 wire _1_;
 wire _2_;
