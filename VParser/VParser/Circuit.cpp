@@ -35,7 +35,43 @@ void Circuit::openCapFile(std::string filepath)
     }
     ins.close();
 }
-void Circuit::
+void Circuit::openConFile(std::string filePath)
+{
+    std::ifstream ins;
+    std::string line;
+    
+    ins.open(filePath);
+    if(ins.fail()){
+        throw std::invalid_argument("Cap File path invaild!\n");
+    }
+    else{
+        while(!ins.eof())
+        {
+            std::getline(ins, line);
+            if(!parseConFile(line))
+                std::cout << "\nNOT PARSED!: " << line << "\n\n";
+        }
+    }
+    ins.close();
+}
+bool Circuit::parseConFile(std::string line)
+{
+    std::regex clk("\\s*ClockPeriod\\s+(\\d+)\\s*");
+    std::regex io("\\s*(\\w+)\\s+(\\d+)\\s*");
+    std::smatch results;
+    
+    if(std::regex_match(line, results, clk))
+        clkPeriod = atof(results.str(1).c_str());
+    else if(std::regex_match(line, results, io))
+        gateMap[results.str(1)]->setDelay(atof(results.str(2).c_str()));
+    else return false;
+    
+    return true;
+}
+float Circuit::getClk()
+{
+    return clkPeriod;
+}
 bool Circuit::parseCapLine(std::string line)
 {
     std::regex capLine("\\s*(\\S+)\\s+(\\d*.\\d*)");

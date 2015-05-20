@@ -1,4 +1,4 @@
-input c;
+input C;
 input A;
 input B;
 wire _1_;
@@ -6,7 +6,7 @@ wire _2_;
 wire _3_;
 output f;
 INVX1 _4_ (
-	.A(c),
+	.A(C),
 	.Y(_1_)
 );
 AND2X1 _5_ (
@@ -15,7 +15,7 @@ AND2X1 _5_ (
 	.Y(_2_)
 );
 AND2X2 _6_ (
-	.A(c),
+	.A(C),
 	.B(B),
 	.Y(_3_)
 );

@@ -1,0 +1,3 @@
+ClockPeriod 6
+A 0.866
+f 1.2

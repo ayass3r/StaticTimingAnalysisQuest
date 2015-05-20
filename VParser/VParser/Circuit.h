@@ -33,12 +33,13 @@ private:
     std::vector<gate*> Paths;
     float PathDelay;
     void printPaths(float);
-    
+    float clkPeriod;
 public:
     Circuit();
+    float getClk();
     void createRoot();
     void openConFile(std::string);
-    void parseConFile();
+    bool parseConFile(std::string);
     void generateEges();
     bool parseLine(std::string);
     void openFile(std::string);

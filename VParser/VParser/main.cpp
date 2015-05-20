@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <vector>
+#include <exception>
 #include "Circuit.h"
 
 int main(int argc, const char * argv[]) {
@@ -17,12 +18,18 @@ int main(int argc, const char * argv[]) {
     std::vector<gate*> gSorted;
     std::string filePath;
     //filePath = "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/VP/VP/code4.v";
-    filePath = "/Users/macbookpro/Downloads/Test4.v";
-    myTest.createRoot();
-    //myTest.createEnd();
-    std::cout << "------------Parsing File...-----------\n";
-    myTest.openFile(filePath);
-    std::cout<<"--------------Done Parsing--------------\n";
+    filePath = "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/6502_alu.g.v";
+    
+    try {
+        myTest.createRoot();
+        //myTest.createEnd();
+        std::cout << "------------Parsing File...-----------\n";
+        myTest.openFile(filePath);
+        std::cout<<"--------------Done Parsing--------------\n";
+    } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+    
     
     myTest.printGates();
     myTest.printWires();
