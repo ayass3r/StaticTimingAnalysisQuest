@@ -56,8 +56,8 @@ void Circuit::openConFile(std::string filePath)
 }
 bool Circuit::parseConFile(std::string line)
 {
-    std::regex clk("\\s*ClockPeriod\\s+(\\d+)\\s*");
-    std::regex io("\\s*(\\w+)\\s+(\\d+)\\s*");
+    std::regex clk("\\s*ClockPeriod\\s+(\\d*.\\d*)\\s*");
+    std::regex io("\\s*(\\w+)\\s+(\\d*.\\d*)\\s*");
     std::smatch results;
     
     if(std::regex_match(line, results, clk))
@@ -76,12 +76,11 @@ bool Circuit::parseCapLine(std::string line)
 {
     std::regex capLine("\\s*(\\S+)\\s+(\\d*.\\d*)");
     std::smatch results;
-    std::string::size_type sz;
 
     if (std::regex_match(line, results, capLine))
     {
-        std::cout<<results.str(1)<<results.str(2)<<std::endl;
-        float x = stof(results.str(2), &sz);
+        //std::cout << results.str(1) << ' ' << results.str(2)<<std::endl;
+        float x = atof(results.str(2).c_str());
         wireMap[results.str(1)]->setNetCap(x);
         return true;
     }
@@ -114,7 +113,7 @@ bool Circuit::parseSkewLine(std::string line)
 
     if (std::regex_match(line, results, skewLine))
     {
-        std::cout<<results.str(1)<<results.str(2)<<std::endl;
+        //std::cout<<results.str(1)<<results.str(2)<<std::endl;
         float x = stof(results.str(2), &sz);
         float y = stof(results.str(3), &sz);
         if (gateMap[results.str(1)+"_input"]->getIsFlip()){
@@ -147,7 +146,7 @@ bool Circuit::parseLine(std::string line)
     
     if(std::regex_match(line, results, sWire))
     {
-        std::cout << results.str(1) <<" "<< results.str(2) << std::endl;
+        //std::cout << results.str(1) <<" "<< results.str(2) << std::endl;
         w = new wire(results.str(2), results.str(1));
         if(results.str(1) != "wire")
         {
@@ -170,7 +169,7 @@ bool Circuit::parseLine(std::string line)
     }
     else if (std::regex_match(line, results, mWire))
     {
-        std::cout << results.str(1) << " bus " <<results.str(2) << ": "<< results.str(3) << ' '<< results.str(4) << std::endl;
+        //std::cout << results.str(1) << " bus " <<results.str(2) << ": "<< results.str(3) << ' '<< results.str(4) << std::endl;
         for(int i = std::atoi(results.str(3).c_str()); i <= std::atoi(results.str(2).c_str()); i++)
         {
             std::string x = results.str(4);
@@ -199,7 +198,7 @@ bool Circuit::parseLine(std::string line)
     else if (std::regex_match(line, results, rGate))
     {
         pGate2 = pGate = results.str(2);
-        std::cout << "\nGate " << results.str(1) << ' ' <<results.str(2) << std::endl;
+        //std::cout << "\nGate " << results.str(1) << ' ' <<results.str(2) << std::endl;
         if(results.str(1) == "DFFPOSX1")
         {
             pGate += "_input";
@@ -226,25 +225,25 @@ bool Circuit::parseLine(std::string line)
     }
     else if (std::regex_match(line, results, in1))
     {
-        std::cout<<"InputPin1: "<< results.str(2) << std::endl;
+        //std::cout<<"InputPin1: "<< results.str(2) << std::endl;
         gateMap[pGate2]->setIn1(results.str(2));
         wireMap[results.str(2)]->setWDestination(gateMap[pGate2]);
     }
     else if (std::regex_match(line, results, in2))
     {
-        std::cout<<"InputPin2: "<< results.str(2) << std::endl;
+        //std::cout<<"InputPin2: "<< results.str(2) << std::endl;
         gateMap[pGate2]->setIn2(results.str(2));
         wireMap[results.str(2)]->setWDestination(gateMap[pGate2]);
     }
     else if (std::regex_match(line, results, rOut))
     {
-        std::cout<<"OutputPin: "<< results.str(2) << std::endl;
+        //std::cout<<"OutputPin: "<< results.str(2) << std::endl;
         gateMap[pGate]->setOut(results.str(2));
         wireMap[results.str(2)]->setWSource(gateMap[pGate]);
     }
     else if (std::regex_match(line, results, assign1))
     {
-        std::cout<<"Assign: "<< results.str(1) << " to" << results.str(2) <<std::endl;
+        //std::cout<<"Assign: "<< results.str(1) << " to" << results.str(2) <<std::endl;
         wire *temp1, *temp2;
         temp1 = wireMap[results.str(1)];
         temp2 = wireMap[results.str(2)];
@@ -285,8 +284,10 @@ void Circuit::generateEges()
             vEdges.push_back(e);
         }
     }
-//    for (int i = 0; i < vEdges.size(); i++)
-//        std::cout << i << ". "<<vEdges[i]->wireName <<"\nSource: "<< vEdges[i]->getSource()->getName() << "\nDestination: " << vEdges[i]->getDestination()->getName()<< std::endl;
+    std::cout << "-----------------Printing Edges------------------\n";
+    for (int i = 0; i < vEdges.size(); i++)
+        std::cout << i << ". " << vEdges[i]->wireName << "\nNetCapacitance: " <<vEdges[i]->getNCapacitance() <<"\nSource: "<< vEdges[i]->getSource()->getName() << "\nDestination: " << vEdges[i]->getDestination()->getName()<< "\n\n";
+    std::cout << "---------------Done Printing Edges---------------\n";
 }
 void Circuit::openFile(std::string filePath)
 {
@@ -349,6 +350,10 @@ void Circuit::printGates()
     for(std::map<std::string, gate*>::iterator i = gateMap.begin(); i != gateMap.end(); i++)
     {
         std::cout << i->second->getType() << ' ' << i->second->getName() << std::endl;
+        if(i->second->getIsFlip()){
+            std::cout << '\t' <<"FlipFlop ClockSkew: " << i->second->getFlipSkew() << std::endl;
+            std::cout << '\t' << "FlipFlop Input Slew: " << i->second->getFInSlew() << std::endl;
+        }
         std::cout << '\t' << "iPort1: " << i->second->getIn1() << std::endl;
         if(i->second->getIn2() != "")
             std::cout << '\t' << "iPort2: " << i->second->getIn2() << std::endl;
