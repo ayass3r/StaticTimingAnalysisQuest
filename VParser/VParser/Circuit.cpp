@@ -7,7 +7,7 @@
 //
 
 #include "Circuit.h"
-
+#include <iomanip>
 
 Circuit::Circuit()
 {
@@ -86,6 +86,7 @@ bool Circuit::parseSkewLine(std::string line)
         
             gateMap[results.str(1)+"_output"]->setFlipSkew(x);
             gateMap[results.str(1)+"_output"]->setFInSlew(y);
+
         }
         else
         {
@@ -109,7 +110,7 @@ bool Circuit::parseLine(std::string line)
     
     if(std::regex_match(line, results, sWire))
     {
-        std::cout << results.str(1) <<results.str(2) << std::endl;
+        std::cout << results.str(1) <<" "<< results.str(2) << std::endl;
         w = new wire(results.str(2), results.str(1));
         if(results.str(1) != "wire")
         {
@@ -132,7 +133,7 @@ bool Circuit::parseLine(std::string line)
     }
     else if (std::regex_match(line, results, mWire))
     {
-        std::cout << results.str(1) << " bus " <<results.str(2) << ":"<< results.str(3) << ' '<< results.str(4) << std::endl;
+        std::cout << results.str(1) << " bus " <<results.str(2) << ": "<< results.str(3) << ' '<< results.str(4) << std::endl;
         for(int i = std::atoi(results.str(3).c_str()); i <= std::atoi(results.str(2).c_str()); i++)
         {
             std::string x = results.str(4);
@@ -171,11 +172,13 @@ bool Circuit::parseLine(std::string line)
             wireMap["root"]->setWDestination(g);
             gateMap.insert(std::pair<std::string, gate*> (pGate, g));
             gateMap[pGate]->setIsFlip(true);
+            gateMap[pGate]->setFlipIn(true);
             
             g = new gate(pGate2, results.str(1));
             g->setFlipIn(true);
             gateMap.insert(std::pair<std::string, gate*> (pGate2, g));
             gateMap[pGate2]->setIsFlip(true);
+            gateMap[pGate2]->setFlipIn(false);
         }
         else
         {
@@ -233,10 +236,12 @@ void Circuit::generateEges()
     {
         for(int j = 0; j < i->second->getWDestionations().size(); j++)
         {
-            pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn1();
-            if(gateMap[i->second->getWDestionations()[j]->getName()]->getIn2() == i->second->getName())
-                pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn2();
-            
+            if(gateMap[i->second->getWDestionations()[j]->getName()] != NULL){
+                if(gateMap[i->second->getWDestionations()[j]->getName()]->getIn2() == i->second->getName())
+                    pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn2();
+                else if(gateMap[i->second->getWDestionations()[j]->getName()]->getIn1() == i->second->getName())
+                    pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn1();
+            }
             e = new Edge(i->second->getWSource(), i->second->getWDestionations()[j], i->second->getName(), pin);
             e->wireName = i->second->getName();
             e->setNCapacitance(i->second->getNetCap());
@@ -330,6 +335,40 @@ void Circuit::printWires()
     }
     std::cout << "---------------Done Printing Wires----------------\n";
 }
+void Circuit::getPaths(gate* g)//gets all paths in the circuit and prints them
+{
+    Paths.push_back(g); // push this gate into the vector
+    if (Paths.size() > 1) PathDelay+=Paths[Paths.size()-2]->getDelay(); //add delay of previous gate
+    for(std::map<std::string, wire*>::iterator i = wireMap.begin(); i != wireMap.end(); i++)
+        if (i->second->getWSource()->getName() == g->getName())
+            for (int j = 0; j < i->second->getWDestionations().size(); j++)
+                getPaths(i->second->getWDestionations()[j]);
+    if ((g->getIsFlip() && !g->getFlipIn()) || g->getType() == "output") //if the gate is an output flipflop or normal output
+        printPaths(calcReqTime(g));
+    Paths.pop_back();
+    PathDelay-= g->getDelay();
+}
+void Circuit::WrapPrintPaths()
+{
+    getPaths(gateMap["root"]);
+}
+void Circuit::printPaths(float c) {
+    float tempDelay = 0.0;
+    std::cout <<"------------------------------------------------------------\n";
+    std::cout <<std::setw(12)<<"Gate_Name"<<std::setw(12)<< "Type" <<std::setw(17)<< "Inc_Delay" <<std::setw(17)<< "Path_Delay\n";
+    std::cout <<"------------------------------------------------------------\n";
+    for (int i = 1; i<Paths.size(); i++)
+    {std::cout<<std::setw(12)<<Paths[i]->getName()<<std::setw(12)<<Paths[i]->getType()<<std::setw(12)<<Paths[i]->getDelay()<<std::setw(12)<<tempDelay<<"\n";
+            tempDelay+=Paths[i]->getDelay();}
+    std::cout <<"------------------------------------------------------------\n";
+    std::cout <<"Data Arrival Time:\t\t"<<tempDelay<<"\n";
+    std::cout <<"Data Required Time:\t\t"<<c<<"\n";
+    std::cout <<"Slack Time:\t\t"<<c - tempDelay<<"\n";
+    std::cout <<"------------------------------------------------------------\n\n";
+};
+float Circuit::calcReqTime(gate* g){
+    return 15.0;
+};
 void Circuit::calcGatesOutputLoad()
 {
     float tempC = 0.0;

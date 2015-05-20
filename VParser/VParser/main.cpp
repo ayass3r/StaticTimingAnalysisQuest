@@ -11,14 +11,13 @@
 #include "Circuit.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+
     
     Circuit myTest;
     std::vector<gate*> gSorted;
     std::string filePath;
     //filePath = "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/VP/VP/code4.v";
-    filePath = "/Users/macbookpro/Downloads/booth.g.v";
+    filePath = "/Users/macbookpro/Downloads/Test4.v";
     myTest.createRoot();
     //myTest.createEnd();
     std::cout << "------------Parsing File...-----------\n";
@@ -33,5 +32,6 @@ int main(int argc, const char * argv[]) {
 //    gSorted = myTest.topSort();
 //    for(int i = 0; i < gSorted.size(); i++)
 //        std::cout << i << ". " << gSorted[i]->getName()<<std::endl;
+    myTest.WrapPrintPaths();
     return 0;
 }

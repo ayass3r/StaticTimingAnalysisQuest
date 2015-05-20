@@ -13,6 +13,7 @@ gate::gate(std::string name, std::string type)
     gateName = name;
     gateType = type;
     isFlip = false;
+    fIsIn = false;
     loadCapacitance = 0;
     in1 = "";
     in2 = "";
@@ -78,4 +79,21 @@ void gate::setFlipIn(bool i)
 bool gate::getFlipIn()
 {
     return fIsIn;
+}
+float gate::getDelay(){
+    return 1.0;
+}
+void gate::setFInSlew(float c)
+{
+    fInSlew = c;
+}
+float gate::getFInSlew(){
+    return fInSlew;
+}
+void gate::setDelay(float c)
+{
+    delay = c;
+}
+bool gate::getIsFlip(){
+    return isFlip;
 }

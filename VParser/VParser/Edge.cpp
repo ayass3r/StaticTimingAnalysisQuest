@@ -11,7 +11,7 @@
 Edge::Edge(gate* source, gate* destination, std::string name, std::string p)
 {
     if(source == NULL || destination==NULL)
-        std::cout << "Null pointer" << name << " "<< std::endl ;
+        std::cout << "Null pointer: " << name << " "<< std::endl ;
     gSource = source;
     gDestination = destination;
     topVisited = false;
@@ -38,4 +38,19 @@ bool Edge::getTopVisited()
 std::string Edge::getPin()
 {
     return pin;
+}
+void Edge::setSlewRate(float c)
+{
+    inSlewRate =c;
+}
+float Edge::getSlewRate(){
+    return inSlewRate;
+}
+void Edge::setNCapacitance(float c)
+{
+    netCapacitance = c;
+}
+float Edge::getNCapacitance()
+{
+    return netCapacitance;
 }

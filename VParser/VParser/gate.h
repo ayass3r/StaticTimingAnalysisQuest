@@ -26,8 +26,8 @@ private:
     float loadCapacitance; // total load capacitance on the output  pin
 //    float outSlewRate; //slew rate of the output pin
     float delay; //delay of the gate
-    float clkSkew;
-    float fInSlew;
+    float clkSkew; //skew of clock
+    float fInSlew; //slew of clock
     
 public:
     gate(std::string, std::string);
@@ -37,7 +37,6 @@ public:
     
     void setFlipIn(bool);
     bool getFlipIn();
-    
     
     void setDelay(float);
     float getDelay();

@@ -30,6 +30,9 @@ private:
     std::map<std::string, wire*> wireMap;
     std::map<std::string, gate*> gateMap;
     std::vector<Edge*> vEdges;
+    std::vector<gate*> Paths;
+    float PathDelay;
+    void printPaths(float);
     
 public:
     Circuit();
@@ -48,6 +51,9 @@ public:
     void calcGatesOutputLoad();
     std::vector<gate*> topSort();
     void trvGate(std::vector<gate*>);
+    void getPaths(gate*);
+    void WrapPrintPaths();
+    float calcReqTime(gate*);
 };
 
 #endif /* defined(__VParser__Circuit__) */
