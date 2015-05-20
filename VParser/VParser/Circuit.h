@@ -37,8 +37,8 @@ private:
 public:
     Circuit();
     void createRoot();
-    //void createEnd();
-    //void connect(bool);
+    void openConFile(std::string);
+    void parseConFile();
     void generateEges();
     bool parseLine(std::string);
     void openFile(std::string);

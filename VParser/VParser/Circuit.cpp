@@ -35,6 +35,7 @@ void Circuit::openCapFile(std::string filepath)
     }
     ins.close();
 }
+void Circuit::
 bool Circuit::parseCapLine(std::string line)
 {
     std::regex capLine("\\s*(\\S+)\\s+(\\d*.\\d*)");
@@ -352,7 +353,8 @@ void Circuit::WrapPrintPaths()
 {
     getPaths(gateMap["root"]);
 }
-void Circuit::printPaths(float c) {
+void Circuit::printPaths(float c)
+{
     float tempDelay = 0.0;
     std::cout <<"------------------------------------------------------------\n";
     std::cout <<std::setw(12)<<"Gate_Name"<<std::setw(12)<< "Type" <<std::setw(17)<< "Inc_Delay" <<std::setw(17)<< "Path_Delay\n";
@@ -366,7 +368,8 @@ void Circuit::printPaths(float c) {
     std::cout <<"Slack Time:\t\t"<<c - tempDelay<<"\n";
     std::cout <<"------------------------------------------------------------\n\n";
 };
-float Circuit::calcReqTime(gate* g){
+float Circuit::calcReqTime(gate* g)
+{
     return 15.0;
 };
 void Circuit::calcGatesOutputLoad()
