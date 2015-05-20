@@ -1,5 +1,4 @@
 input A;
-input clk;
 output f;
 wire _1_;
 wire _2_;
@@ -22,7 +21,7 @@ DFFPOSX1 _9_ (
 DFFPOSX1 _10_ (
 	.clk(clk),
 	.D(_5_),
-	.Q(_16_)
+	.Q(_6_)
 );
 AND2X1 _12_ (
 	.A(_2_),
@@ -40,7 +39,7 @@ INVX2 _14_ (
 );
 INVX2 _15_ (
 	.A(_7_),
-	.Y(_f_)
+	.Y(f)
 );
 OR2X1 _11_ (
 	.A(A),
