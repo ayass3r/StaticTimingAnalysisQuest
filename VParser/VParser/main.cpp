@@ -11,10 +11,10 @@
 #include <exception>
 #include "Circuit.h"
 
-#define NETLIST "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/Test4.v"
-#define NETCAP "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/Cap4.txt"
-#define SKEW "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/skew4.txt"
-#define CONSTRAINT "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/ConFile4.txt"
+#define NETLIST "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/Test6.v"
+#define NETCAP "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/Cap6.txt"
+#define SKEW "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/skew6.txt"
+#define CONSTRAINT "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/ConFile6.txt"
 
 int main(int argc, const char * argv[]) {
 
@@ -24,36 +24,50 @@ int main(int argc, const char * argv[]) {
     
     try {
         myTest.createRoot();
-        std::cout << "----------Parsing NetList File ...-------------\n";
+        std::cout << "----------------Parsing NetList File ...-------------\n";
         myTest.openFile(NETLIST);
-        std::cout << "----------Done Parsing NetList-----------------\n";
+        std::cout << "----------------Done Parsing NetList-----------------\n";
         
-        std::cout << "----------Parsing  Skew  File ...--------------\n";
+        std::cout << "----------------Parsing  Skew  File ...--------------\n";
         myTest.openSkewFile(SKEW);
-        std::cout << "----------Done Parsing Skew File---------------\n";
+        std::cout << "----------------Done Parsing Skew File---------------\n";
         
-        std::cout << "----------Parsing Capacitance File...----------\n";
+        std::cout << "----------------Parsing Capacitance File...----------\n";
         myTest.openCapFile(NETCAP);
-        std::cout << "----------Done Parsing Capacitance File--------\n";
+        std::cout << "----------------Done Parsing Capacitance File--------\n";
         
-        std::cout << "----------Parsing Constraint File...-----------\n";
+        std::cout << "----------------Parsing Constraint File...-----------\n";
         myTest.openConFile(CONSTRAINT);
-        std::cout << "----------Done Parsing Constraint File...------\n";
+        std::cout << "----------------Done Parsing Constraint File...------\n";
         
-    } catch (std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
+        
+        std::cout << "----------------Printing Gates-----------------------\n";
+        myTest.printGates();
+        std::cout << "----------------Done Printing Gates------------------\n";
     
+        std::cout << "----------------Printing Wires-----------------------\n";
+        myTest.printWires();
+        std::cout << "----------------Done Printing Wires------------------\n";
     
-    myTest.printGates();
-    myTest.printWires();
+        std::cout << "----------------Generating Edges---------------------\n";
+        myTest.generateEges();
+        std::cout << "----------------Edges Generated----------------------\n";
     
-    myTest.generateEges();
-    myTest.topSort();
+        std::cout << "----------------Graph Toplogical Sort----------------\n";
+        myTest.topSort();
+        std::cout << "----------------Graph Done Sorting-------------------\n";
     
 //    gSorted = myTest.topSort();
 //    for(int i = 0; i < gSorted.size(); i++)
 //        std::cout << i << ". " << gSorted[i]->getName()<<std::endl;
-    myTest.WrapPrintPaths();
+        std::cout << "----------------Finding all Paths--------------------\n";
+        myTest.WrapPrintPaths();
+        std::cout << "----------------All paths displayed------------------\n";
+        
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
+
     return 0;
 }

@@ -278,21 +278,25 @@ void Circuit::generateEges()
                 else if(gateMap[i->second->getWDestionations()[j]->getName()]->getIn1() == i->second->getName())
                     pin = gateMap[i->second->getWDestionations()[j]->getName()]->getIn1();
             }
+            else
+                throw std::invalid_argument("Invalid Routing\n");
+            
             e = new Edge(i->second->getWSource(), i->second->getWDestionations()[j], i->second->getName(), pin);
             e->wireName = i->second->getName();
             e->setNCapacitance(i->second->getNetCap());
             vEdges.push_back(e);
+            
+            
         }
     }
-    std::cout << "-----------------Printing Edges------------------\n";
     for (int i = 0; i < vEdges.size(); i++)
         std::cout << i << ". " << vEdges[i]->wireName << "\nNetCapacitance: " <<vEdges[i]->getNCapacitance() <<"\nSource: "<< vEdges[i]->getSource()->getName() << "\nDestination: " << vEdges[i]->getDestination()->getName()<< "\n\n";
-    std::cout << "---------------Done Printing Edges---------------\n";
 }
 void Circuit::openFile(std::string filePath)
 {
     std::ifstream ins;
     std::string line;
+    int counter = 0;
     
     ins.open(filePath);
     if(ins.fail()){
@@ -301,9 +305,10 @@ void Circuit::openFile(std::string filePath)
     else{
         while(!ins.eof())
         {
+            counter++;
             std::getline(ins, line);
-            if(!parseLine(line))
-                std::cout << "\nNOT PARSED!: " << line << "\n\n";
+            if(!parseLine(line) && line != ");")
+                std::cout << '(' << counter << ") NOT PARSED!: " << line << "\n";
         }
     }
     ins.close();
@@ -339,6 +344,7 @@ std::vector<gate*> Circuit::topSort()
     }
     for (int i = 0; i < vEdges.size(); i++) if (!vEdges[i]->getTopVisited()) {std::cout <<"Graph has cycles"<<std::endl; break;}
     
+    
     for(int i = 0; i < L.size(); i++)
         std::cout << i << ". " << L[i]->getName()<<std::endl;
     
@@ -360,7 +366,6 @@ void Circuit::printGates()
         
         std::cout << '\t' << "oPort3: " << i->second->getOut() << std::endl;
     }
-    std::cout << "---------------Done Printing Gates----------------\n";
 }
 void Circuit::printWires()
 {
@@ -375,7 +380,6 @@ void Circuit::printWires()
         for(int x = 0; x < i->second->getWDestionations().size(); x++)
             std::cout << '\t' << "wDestinations: " << i->second->getWDestionations()[x]->getName() << std::endl;
     }
-    std::cout << "---------------Done Printing Wires----------------\n";
 }
 void Circuit::getPaths(gate* g)//gets all paths in the circuit and prints them
 {
