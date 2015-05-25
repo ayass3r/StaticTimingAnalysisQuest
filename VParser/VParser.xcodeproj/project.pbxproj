@@ -11,6 +11,7 @@
 		7799210F1AFFC12300B0F100 /* wire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7799210D1AFFC12300B0F100 /* wire.cpp */; };
 		779921181B00CD7300B0F100 /* gate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779921161B00CD7300B0F100 /* gate.cpp */; };
 		77CEFCA71B064ECA000EC28F /* Edge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77CEFCA51B064ECA000EC28F /* Edge.cpp */; };
+		77D4C3FD1B0FB4660008D12F /* STA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77D4C3FC1B0FB4660008D12F /* STA.cpp */; };
 		77E7FEF61AFDDB5D00D716B2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E7FEF51AFDDB5D00D716B2 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		779921171B00CD7300B0F100 /* gate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gate.h; sourceTree = "<group>"; };
 		77CEFCA51B064ECA000EC28F /* Edge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Edge.cpp; sourceTree = "<group>"; };
 		77CEFCA61B064ECA000EC28F /* Edge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
+		77D4C3FC1B0FB4660008D12F /* STA.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = STA.cpp; sourceTree = "<group>"; wrapsLines = 1; };
 		77E7FEF21AFDDB5D00D716B2 /* VParser */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VParser; sourceTree = BUILT_PRODUCTS_DIR; };
 		77E7FEF51AFDDB5D00D716B2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +71,7 @@
 		77E7FEF41AFDDB5D00D716B2 /* VParser */ = {
 			isa = PBXGroup;
 			children = (
+				77D4C3FC1B0FB4660008D12F /* STA.cpp */,
 				77E7FEF51AFDDB5D00D716B2 /* main.cpp */,
 				7799210A1AFFADB900B0F100 /* Circuit.cpp */,
 				7799210B1AFFADB900B0F100 /* Circuit.h */,
@@ -143,6 +146,7 @@
 				7799210F1AFFC12300B0F100 /* wire.cpp in Sources */,
 				7799210C1AFFADB900B0F100 /* Circuit.cpp in Sources */,
 				77CEFCA71B064ECA000EC28F /* Edge.cpp in Sources */,
+				77D4C3FD1B0FB4660008D12F /* STA.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
