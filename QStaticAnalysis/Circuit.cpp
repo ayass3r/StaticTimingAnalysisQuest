@@ -7,6 +7,7 @@
 //
 
 #include "Circuit.h"
+#include "STA.cpp"
 #include <iomanip>
 
 Circuit::Circuit()

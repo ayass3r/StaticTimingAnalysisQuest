@@ -412,3 +412,18 @@ void ParseLiberty(const char* fpath){
         Class.push_back(ct);
     }
 }
+
+CellClass* findClass(QString ClassName)
+{
+    for(int i = 0; i < Class.size(); i++)
+        if(Class[i].Name == ClassName)
+            return &Class[i];
+    return 0;
+}
+Pin* findPin(QString PinName, QList<Pin>* PinList)
+{
+    for(int i = 0; i < PinList->size(); i++)
+        if((*PinList)[i].Name == PinName)
+            return &(*PinList)[i];
+    return 0;
+}

@@ -40,7 +40,6 @@ int main(int argc, const char * argv[]) {
         myTest.openConFile(CONSTRAINT);
         std::cout << "----------------Done Parsing Constraint File...------\n";
         
-        
         std::cout << "----------------Printing Gates-----------------------\n";
         myTest.printGates();
         std::cout << "----------------Done Printing Gates------------------\n";

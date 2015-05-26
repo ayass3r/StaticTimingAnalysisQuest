@@ -12,7 +12,6 @@
 #include "Edge.h"
 #include "wire.h"
 #include "gate.h"
-//#include <stdio.h>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -20,7 +19,6 @@
 #include <regex>
 #include <queue>
 #include <fstream>
-#include "STA.cpp"
 
 class Circuit
 {  
