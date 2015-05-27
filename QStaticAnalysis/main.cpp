@@ -12,12 +12,18 @@
 #include "Circuit.h"
 //#include "STA.cpp"
 
-#define LIBERTY "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/osu035.lib"
+/*#define LIBERTY "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/osu035.lib"
 #define NETLIST "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/Test6.v"
 #define NETCAP "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/Cap6.txt"
 #define SKEW "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/skew6.txt"
 #define CONSTRAINT "/Users/macbookpro/Desktop/Khodary/Courses/DDII/Projects/StaticTimingAnalysisQuest/TestCases/ConFile6.txt"
+*/
 
+#define LIBERTY "D:/AUC/Spring 2015/Digital 2/Projects/Project2/StaticTimingAnalysisQuest/osu035.lib"
+#define NETLIST "D:/AUC/Spring 2015/Digital 2/Projects/Project2/StaticTimingAnalysisQuest/TestCases/Test6.v"
+#define NETCAP "D:/AUC/Spring 2015/Digital 2/Projects/Project2/StaticTimingAnalysisQuest/TestCases/Cap6.txt"
+#define SKEW "D:/AUC/Spring 2015/Digital 2/Projects/Project2/StaticTimingAnalysisQuest/TestCases/skew6.txt"
+#define CONSTRAINT "D:/AUC/Spring 2015/Digital 2/Projects/Project2/StaticTimingAnalysisQuest/TestCases/ConFile6.txt"
 int main()
 {
     Circuit myTest;

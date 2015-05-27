@@ -1,0 +1,1 @@
+no flip flops therefore no clk skews or slew
